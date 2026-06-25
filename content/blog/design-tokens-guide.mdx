@@ -1,0 +1,88 @@
+---
+title: "Design Tokens 实践指南"
+description: "从零搭建 Design Tokens 系统，实现设计与开发的单一事实来源"
+date: "2024-03-10"
+author: "Design Team"
+category: "工程实践"
+tags: ["design-tokens", "tailwind", "design-system"]
+---
+
+# Design Tokens 实践指南
+
+Design Tokens 是设计系统的基础设施，它将视觉决策从代码中抽离出来，形成可维护、可复用的单一事实来源。
+
+## 为什么需要 Design Tokens？
+
+在传统开发中，颜色值散落在各处：
+
+```css
+/* ❌ 到处硬编码 */
+.button { background: #0070c5; }
+.link { color: #0070c5; }
+.header { border-bottom: 1px solid #e2e8f0; }
+```
+
+问题显而易见：修改一个颜色需要搜索整个代码库，且容易遗漏。
+
+## Token 架构
+
+我们采用三层架构：
+
+<Card>
+  <CardHeader>
+    <CardTitle>三层 Token 架构</CardTitle>
+    <CardDescription>从原始值到语义化命名</CardDescription>
+  </CardHeader>
+  <CardContent>
+
+  1. **原始 Token** — `design-tokens.json` 中的色值定义
+  2. **Tailwind 映射** — `tailwind.config.ts` 将 Token 绑定到工具类
+  3. **组件使用** — 组件中引用 Tailwind 类名
+
+  </CardContent>
+</Card>
+
+## 实现示例
+
+### 1. 定义 Token
+
+```json
+{
+  "color": {
+    "primary": {
+      "600": { "value": "#0070c5", "type": "color" }
+    }
+  }
+}
+```
+
+### 2. Tailwind 绑定
+
+```ts
+import { tailwindColors } from './design-system/tokens';
+
+export default {
+  theme: {
+    extend: {
+      colors: {
+        primary: tailwindColors.primary,
+      },
+    },
+  },
+};
+```
+
+### 3. 组件中使用
+
+```tsx
+<button className="bg-primary-600 hover:bg-primary-700">
+  点击
+</button>
+```
+
+## 最佳实践
+
+- **单一来源**：所有视觉值定义在 `design-tokens.json` 中
+- **语义命名**：用 `primary` / `danger` 而非 `blue` / `red`
+- **色阶完整**：每个颜色提供 50-900 的完整色阶
+- **禁止硬编码**：Code Review 时检查是否有十六进制色值

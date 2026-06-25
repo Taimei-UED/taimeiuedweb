@@ -1,0 +1,102 @@
+{
+  "$schema": "https://design-tokens.org/format",
+  "$description": "Design Team — 核心设计令牌",
+  "color": {
+    "primary": {
+      "50": { "value": "#f0f7ff", "type": "color" },
+      "100": { "value": "#e0effe", "type": "color" },
+      "200": { "value": "#bae0fd", "type": "color" },
+      "300": { "value": "#7cc6fc", "type": "color" },
+      "400": { "value": "#36a9f7", "type": "color" },
+      "500": { "value": "#0c8ee7", "type": "color" },
+      "600": { "value": "#0070c5", "type": "color" },
+      "700": { "value": "#01599f", "type": "color" },
+      "800": { "value": "#064c84", "type": "color" },
+      "900": { "value": "#0b406d", "type": "color" }
+    },
+    "accent": {
+      "50": { "value": "#fef7f0", "type": "color" },
+      "100": { "value": "#fdecd9", "type": "color" },
+      "200": { "value": "#fad5b3", "type": "color" },
+      "300": { "value": "#f7b87d", "type": "color" },
+      "400": { "value": "#f49246", "type": "color" },
+      "500": { "value": "#f17523", "type": "color" },
+      "600": { "value": "#e35815", "type": "color" },
+      "700": { "value": "#bd4115", "type": "color" },
+      "800": { "value": "#973418", "type": "color" },
+      "900": { "value": "#7a2c17", "type": "color" }
+    },
+    "neutral": {
+      "50": { "value": "#f8fafc", "type": "color" },
+      "100": { "value": "#f1f5f9", "type": "color" },
+      "200": { "value": "#e2e8f0", "type": "color" },
+      "300": { "value": "#cbd5e1", "type": "color" },
+      "400": { "value": "#94a3b8", "type": "color" },
+      "500": { "value": "#64748b", "type": "color" },
+      "600": { "value": "#475569", "type": "color" },
+      "700": { "value": "#334155", "type": "color" },
+      "800": { "value": "#1e293b", "type": "color" },
+      "900": { "value": "#0f172a", "type": "color" }
+    },
+    "success": {
+      "50": { "value": "#f0fdf4", "type": "color" },
+      "500": { "value": "#22c55e", "type": "color" },
+      "600": { "value": "#16a34a", "type": "color" },
+      "700": { "value": "#15803d", "type": "color" }
+    },
+    "warning": {
+      "50": { "value": "#fffbeb", "type": "color" },
+      "500": { "value": "#f59e0b", "type": "color" },
+      "600": { "value": "#d97706", "type": "color" },
+      "700": { "value": "#b45309", "type": "color" }
+    },
+    "danger": {
+      "50": { "value": "#fef2f2", "type": "color" },
+      "500": { "value": "#ef4444", "type": "color" },
+      "600": { "value": "#dc2626", "type": "color" },
+      "700": { "value": "#b91c1c", "type": "color" }
+    },
+    "white": { "value": "#ffffff", "type": "color" }
+  },
+  "spacing": {
+    "xs": { "value": "0.5rem", "type": "spacing" },
+    "sm": { "value": "0.75rem", "type": "spacing" },
+    "md": { "value": "1rem", "type": "spacing" },
+    "lg": { "value": "1.5rem", "type": "spacing" },
+    "xl": { "value": "2rem", "type": "spacing" },
+    "2xl": { "value": "3rem", "type": "spacing" }
+  },
+  "radius": {
+    "sm": { "value": "0.375rem", "type": "borderRadius" },
+    "md": { "value": "0.5rem", "type": "borderRadius" },
+    "lg": { "value": "0.75rem", "type": "borderRadius" },
+    "xl": { "value": "1rem", "type": "borderRadius" },
+    "2xl": { "value": "1.5rem", "type": "borderRadius" },
+    "full": { "value": "9999px", "type": "borderRadius" }
+  },
+  "fontSize": {
+    "xs": { "value": "0.75rem", "type": "fontSize" },
+    "sm": { "value": "0.875rem", "type": "fontSize" },
+    "base": { "value": "1rem", "type": "fontSize" },
+    "lg": { "value": "1.125rem", "type": "fontSize" },
+    "xl": { "value": "1.25rem", "type": "fontSize" },
+    "2xl": { "value": "1.5rem", "type": "fontSize" }
+  },
+  "fontWeight": {
+    "normal": { "value": "400", "type": "fontWeight" },
+    "medium": { "value": "500", "type": "fontWeight" },
+    "semibold": { "value": "600", "type": "fontWeight" },
+    "bold": { "value": "700", "type": "fontWeight" }
+  },
+  "shadow": {
+    "sm": { "value": "0 1px 2px 0 rgb(0 0 0 / 0.05)", "type": "boxShadow" },
+    "md": {
+      "value": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+      "type": "boxShadow"
+    },
+    "lg": {
+      "value": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+      "type": "boxShadow"
+    }
+  }
+}

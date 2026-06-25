@@ -1,0 +1,92 @@
+---
+title: "设计系统"
+description: "组件库、Design Tokens 与使用指南，构建一致且高效的数字产品"
+date: "2024-02-01"
+order: 3
+---
+
+# 设计系统
+
+设计系统是团队的单一事实来源（Single Source of Truth），包含 Design Tokens、组件库、使用规范和设计原则。
+
+## 架构概览
+
+设计系统由以下层次组成：
+
+<Card>
+  <CardHeader>
+    <CardTitle>系统架构</CardTitle>
+    <CardDescription>从 Token 到页面的层次结构</CardDescription>
+  </CardHeader>
+  <CardContent>
+
+  1. **Design Tokens**（`design-tokens.json`）— 颜色、间距、圆角等原始值
+  2. **Tailwind 配置**（`tailwind.config.ts`）— 将 Token 绑定到 CSS 工具类
+  3. **基础组件**（`design-system/`）— Button、Card、Input 等
+  4. **业务组件** — 基于基础组件组合的业务级 UI
+  5. **页面模板** — 最终呈现给用户的完整页面
+
+  </CardContent>
+</Card>
+
+## Design Tokens
+
+所有视觉属性的单一数据源，存储在 `design-tokens.json` 中：
+
+- **颜色**：primary / accent / neutral / success / warning / danger
+- **间距**：xs / sm / md / lg / xl / 2xl
+- **圆角**：sm / md / lg / xl / 2xl / full
+- **阴影**：sm / md / lg
+
+> 在组件中永远使用 Token 对应的 Tailwind 类名（如 `bg-primary-600`），
+> 而非硬编码色值（如 `bg-[#0070c5]`）。
+
+## 组件库
+
+### Button
+
+支持 5 种变体和 3 种尺寸：
+
+- **Variants**: `primary` / `secondary` / `outline` / `ghost` / `danger`
+- **Sizes**: `sm` / `md` / `lg`
+- **States**: `loading` / `disabled`
+- **Slots**: `leftIcon` / `rightIcon`
+
+### Card
+
+可组合的卡片容器，包含子组件：
+
+- `CardHeader` — 带分隔线的头部
+- `CardTitle` — 标题
+- `CardDescription` — 描述文本
+- `CardContent` — 主体内容
+- `CardFooter` — 底部操作区
+
+### Input
+
+表单输入组件，内置状态管理：
+
+- `label` — 标签
+- `hint` — 辅助提示
+- `error` — 错误信息（自动触发错误样式）
+- `leftIcon` / `rightIcon` — 图标插槽
+
+## Storybook
+
+组件的交互式文档与开发环境：
+
+```bash
+npm run storybook   # 启动 → localhost:6006
+```
+
+在 Storybook 中可以：
+- 查看所有组件的变体和状态
+- 通过 Controls 面板实时调整 props
+- 测试组件的边界情况
+
+## 使用规范
+
+1. **从 Tokens 出发** — 所有颜色、间距来自 `design-tokens.json`
+2. **优先使用组件** — 不要重复造轮子，先查 `design-system/` 目录
+3. **保持一致性** — 相似场景使用相同组件变体
+4. **文档先行** — 新增组件需同步更新 Storybook stories
