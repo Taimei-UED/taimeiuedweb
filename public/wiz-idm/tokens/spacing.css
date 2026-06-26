@@ -1,0 +1,37 @@
+/* ─ Wiz iDM — Spacing, radius, shadow, borders ──────────────────
+   Values from the .fig Spacing & Radius variable collections plus the
+   Shadow specimen. Spacing follows a 4px base step.
+   ─────────────────────────────────────────────────────────────── */
+:root {
+  /* Spacing scale (px) */
+  --space-xs:  4px;
+  --space-sm:  8px;
+  --space-md:  12px;
+  --space-lg:  16px;
+  --space-xl:  24px;
+  --space-2xl: 32px;
+  --space-3xl: 48px;
+  --space-4xl: 64px;
+
+  /* Radius scale (px) */
+  --radius-none: 0px;
+  --radius-xs:  4px;
+  --radius-sm:  8px;
+  --radius-md:  12px;
+  --radius-lg:  16px;
+  --radius-xl:  24px;
+  --radius-2xl: 32px;
+  --radius-full: 9999px;
+
+  /* Border widths */
+  --border-thin:  1px;
+  --border-thick: 2px;
+
+  /* Elevation — the .fig uses one soft two-layer card shadow */
+  --shadow-card: 1px 2px 6px 0px rgba(0,0,0,0.04), 0px 1px 2px 0px rgba(0,0,0,0.06);
+  --shadow-raised: 0 3px 8px 0 rgba(0,0,0,0.05), 1px 2px 4px 0 rgba(0,0,0,0.08);
+  --shadow-pop:  0px 8px 24px 0px rgba(0,0,0,0.10), 0px 2px 6px 0px rgba(0,0,0,0.06);
+  --shadow-modal:0px 16px 48px 0px rgba(0,0,0,0.18);
+  /* Hairline inset border used on cards/specimens */
+  --ring-hairline: inset 0 0 0 1px var(--grey-40);
+}

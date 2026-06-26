@@ -1,0 +1,273 @@
+/* Generated from Figma Variables. First mode = :root default.
+   FLOAT tokens are unitless — multiply by 1px in calc() where a length is needed. */
+
+:root {
+  --action-active: rgba(0,0,0,0.54); /* @kind color */
+  --base-black: rgb(0,0,0); /* @kind color */
+  --base-white: rgb(255,255,255); /* @kind color */
+  --blue-200: rgb(144,202,249); /* @kind color */
+  --blue-700: rgb(25,118,210); /* @kind color */
+  --brand-blue-100: rgb(0,30,86); /* @kind color */
+  --brand-blue-10: rgb(244,248,255); /* @kind color */
+  --brand-blue-20: rgb(220,233,255); /* @kind color */
+  --brand-blue-30: rgb(180,208,255); /* @kind color */
+  --brand-blue-40: rgb(135,176,251); /* @kind color */
+  --brand-blue-50: rgb(67,130,248); /* @kind color */
+  --brand-blue-60: rgb(42,109,231); /* @kind color */
+  --brand-blue-70: rgb(0,73,205); /* @kind color */
+  --brand-blue-80: rgb(0,58,163); /* @kind color */
+  --brand-blue-90: rgb(5,36,120); /* @kind color */
+  --colors-alpha-white-0: rgba(255,255,255,0); /* @kind color */
+  --colors-neutral-black: rgb(0,0,0); /* @kind color */
+  --colors-neutral-grey-8: rgb(20,20,20); /* @kind color */
+  --colors-neutral-grey-96: rgb(245,245,245); /* @kind color */
+  --colors-neutral-white: rgb(255,255,255); /* @kind color */
+  --components-paper-elevation-0: rgb(255,255,255); /* @kind color */
+  --container: var(--corner-radius-tag-medium);
+  --corner-extra-large: 28;
+  --corner-radius-40: 4;
+  --corner-radius-80: 8;
+  --corner-radius-circular-2: var(--web-corner-radius-circular);
+  --corner-radius-circular: 9999;
+  --corner-radius-medium: var(--web-corner-radius-medium);
+  --corner-radius-tag-circular: var(--corner-radius-circular-2);
+  --corner-radius-tag-medium: var(--corner-radius-medium);
+  --corner-radius-x-large: var(--web-corner-radius-x-large);
+  --fontfamily: "Roboto"; /* @kind font */
+  --fontsize-0-75rem: 12; /* @kind font */
+  --fontweightregular: 400; /* @kind font */
+  --grey-100: rgb(0,0,0); /* @kind color */
+  --grey-10: rgb(250,250,250); /* @kind color */
+  --grey-20: rgb(245,245,245); /* @kind color */
+  --grey-30: rgb(240,240,240); /* @kind color */
+  --grey-40: rgb(229,229,229); /* @kind color */
+  --grey-50: rgb(204,204,204); /* @kind color */
+  --grey-60: rgb(191,191,191); /* @kind color */
+  --grey-70: rgb(153,153,153); /* @kind color */
+  --grey-80: rgb(102,102,102); /* @kind color */
+  --grey-90: rgb(51,51,51); /* @kind color */
+  --neutral-background-3-rest: var(--colors-neutral-grey-96); /* @kind color */
+  --neutral-stroke-focus-1-rest: var(--colors-neutral-white); /* @kind color */
+  --neutral-stroke-focus-2-rest: var(--colors-neutral-black); /* @kind color */
+  --neutral-stroke-transparent-interactive-rest: var(--colors-alpha-white-0); /* @kind color */
+  --primary-contrasttext: rgb(255,255,255); /* @kind color */
+  --primary-main: var(--blue-700); /* @kind color */
+  --radius-2xl: 32;
+  --radius-full: 9999;
+  --radius-lg: 16;
+  --radius-md: 12;
+  --radius-none: 0;
+  --radius-sm: 8;
+  --radius-xl: 24;
+  --radius-xs: 4;
+  --schemes-on-surface: rgb(29,27,32); /* @kind color */
+  --schemes-outline-variant: rgb(202,196,208); /* @kind color */
+  --signal-error: rgb(218,30,40); /* @kind color */
+  --signal-green-blue: rgb(0,182,199); /* @kind color */
+  --signal-light-blue: rgb(17,146,232); /* @kind color */
+  --signal-orange: rgb(255,106,0); /* @kind color */
+  --signal-pink: rgb(255,87,205); /* @kind color */
+  --signal-purple: rgb(138,63,251); /* @kind color */
+  --signal-success: rgb(62,194,62); /* @kind color */
+  --signal-warning: rgb(255,187,0); /* @kind color */
+  --size-60: 6;
+  --size-none: 0;
+  --spacing-2xl: 32;
+  --spacing-3xl: 48;
+  --spacing-4xl: 64;
+  --spacing-horizontal-none: var(--size-none);
+  --spacing-horizontal-snudge: var(--size-60);
+  --spacing-lg: 16;
+  --spacing-md: 12;
+  --spacing-sm: 8;
+  --spacing-vertical-none: var(--size-none);
+  --spacing-xl: 24;
+  --spacing-xs: 4;
+  /* Figma "Static Weight = Regular" — expressed as its numeric weight (not a font family) */
+  --static-weight-regular: 400; /* @kind font */
+  --stroke-width-20: 2;
+  --stroke-width-thick: var(--stroke-width-20);
+  --taimei-grey-grey-20: rgb(245,245,245); /* @kind color */
+  --taimei-grey-grey-40: rgb(229,229,229); /* @kind color */
+  --taimei-grey-grey-90: rgb(51,51,51); /* @kind color */
+  --text-disabled: rgba(0,0,0,0.38); /* @kind color */
+  --typography-caption: var(--fontsize-0-75rem);
+  --web-corner-radius-circular: var(--corner-radius-circular);
+  --web-corner-radius-medium: var(--corner-radius-40);
+  --web-corner-radius-x-large: var(--corner-radius-80);
+}
+
+:root[data-theme="dark"], .dark {
+  --action-active: rgb(255,255,255); /* @kind color */
+  --components-paper-elevation-0: rgb(18,18,18); /* @kind color */
+  --neutral-background-3-rest: var(--colors-neutral-grey-8); /* @kind color */
+  --neutral-stroke-focus-1-rest: var(--colors-neutral-black); /* @kind color */
+  --neutral-stroke-focus-2-rest: var(--colors-neutral-white); /* @kind color */
+  --neutral-stroke-transparent-interactive-rest: var(--colors-alpha-white-0); /* @kind color */
+  --primary-contrasttext: rgba(0,0,0,0.87); /* @kind color */
+  --primary-main: var(--blue-200); /* @kind color */
+  --schemes-on-surface: rgb(230,224,233); /* @kind color */
+  --schemes-on-surface: rgb(255,249,255); /* @kind color */
+  --schemes-on-surface: rgb(255,255,255); /* @kind color */
+  --schemes-outline-variant: rgb(134,129,139); /* @kind color */
+  --schemes-outline-variant: rgb(206,200,212); /* @kind color */
+  --schemes-outline-variant: rgb(73,69,79); /* @kind color */
+  --text-disabled: rgba(255,255,255,0.38); /* @kind color */
+}
+
+:root[data-mode="copilot"] {
+  --corner-radius-tag-circular: var(--corner-radius-circular-2);
+  --corner-radius-tag-medium: var(--corner-radius-x-large);
+}
+
+:root[data-mode="circular"] {
+  --container: var(--corner-radius-tag-circular);
+}
+
+:root[data-theme="light"], .light {
+  --schemes-on-surface: rgb(0,0,0); /* @kind color */
+  --schemes-on-surface: rgb(29,27,32); /* @kind color */
+  --schemes-outline-variant: rgb(125,121,131); /* @kind color */
+  --schemes-outline-variant: rgb(69,65,74); /* @kind color */
+}
+
+:root[data-mode="monochrome-lt"] {
+  --schemes-on-surface: rgb(27,27,27); /* @kind color */
+  --schemes-outline-variant: rgb(198,198,198); /* @kind color */
+}
+
+:root[data-mode="monochrome-dt"] {
+  --schemes-on-surface: rgb(226,226,226); /* @kind color */
+  --schemes-outline-variant: rgb(71,71,71); /* @kind color */
+}
+
+:root[data-mode="pink-lt"] {
+  --schemes-on-surface: rgb(33,25,28); /* @kind color */
+  --schemes-outline-variant: rgb(212,194,199); /* @kind color */
+}
+
+:root[data-mode="pink-dt"] {
+  --schemes-on-surface: rgb(238,223,227); /* @kind color */
+  --schemes-outline-variant: rgb(80,67,72); /* @kind color */
+}
+
+:root[data-mode="rose-lt"] {
+  --schemes-on-surface: rgb(34,25,26); /* @kind color */
+  --schemes-outline-variant: rgb(215,194,195); /* @kind color */
+}
+
+:root[data-mode="rose-dt"] {
+  --schemes-on-surface: rgb(240,222,223); /* @kind color */
+  --schemes-outline-variant: rgb(82,67,69); /* @kind color */
+}
+
+:root[data-mode="red-lt"] {
+  --schemes-on-surface: rgb(35,25,24); /* @kind color */
+  --schemes-outline-variant: rgb(216,194,190); /* @kind color */
+}
+
+:root[data-mode="red-dt"] {
+  --schemes-on-surface: rgb(241,222,220); /* @kind color */
+  --schemes-outline-variant: rgb(83,67,65); /* @kind color */
+}
+
+:root[data-mode="orange-lt"] {
+  --schemes-on-surface: rgb(34,26,21); /* @kind color */
+  --schemes-outline-variant: rgb(215,194,184); /* @kind color */
+}
+
+:root[data-mode="orange-dt"] {
+  --schemes-on-surface: rgb(240,223,215); /* @kind color */
+  --schemes-outline-variant: rgb(82,68,60); /* @kind color */
+}
+
+:root[data-mode="yellow-lt"] {
+  --schemes-on-surface: rgb(31,27,19); /* @kind color */
+  --schemes-outline-variant: rgb(208,197,180); /* @kind color */
+}
+
+:root[data-mode="yellow-dt"] {
+  --schemes-on-surface: rgb(235,225,212); /* @kind color */
+  --schemes-outline-variant: rgb(77,70,57); /* @kind color */
+}
+
+:root[data-mode="chartreuse-lt"] {
+  --schemes-on-surface: rgb(27,28,20); /* @kind color */
+  --schemes-outline-variant: rgb(200,199,183); /* @kind color */
+}
+
+:root[data-mode="chartreuse-dt"] {
+  --schemes-on-surface: rgb(229,227,214); /* @kind color */
+  --schemes-outline-variant: rgb(71,72,59); /* @kind color */
+}
+
+:root[data-mode="green-lt"] {
+  --schemes-on-surface: rgb(24,29,24); /* @kind color */
+  --schemes-outline-variant: rgb(193,201,190); /* @kind color */
+}
+
+:root[data-mode="green-dt"] {
+  --schemes-on-surface: rgb(224,228,219); /* @kind color */
+  --schemes-outline-variant: rgb(66,73,64); /* @kind color */
+}
+
+:root[data-mode="teal-lt"] {
+  --schemes-on-surface: rgb(23,29,27); /* @kind color */
+  --schemes-outline-variant: rgb(190,201,197); /* @kind color */
+}
+
+:root[data-mode="teal-dt"] {
+  --schemes-on-surface: rgb(221,228,225); /* @kind color */
+  --schemes-outline-variant: rgb(63,73,70); /* @kind color */
+}
+
+:root[data-mode="cyan-lt"] {
+  --schemes-on-surface: rgb(23,28,30); /* @kind color */
+  --schemes-outline-variant: rgb(191,200,204); /* @kind color */
+}
+
+:root[data-mode="cyan-dt"] {
+  --schemes-on-surface: rgb(222,227,230); /* @kind color */
+  --schemes-outline-variant: rgb(64,72,75); /* @kind color */
+}
+
+:root[data-mode="blue-lt"] {
+  --schemes-on-surface: rgb(26,27,33); /* @kind color */
+  --schemes-outline-variant: rgb(197,198,208); /* @kind color */
+}
+
+:root[data-mode="blue-dt"] {
+  --schemes-on-surface: rgb(226,226,233); /* @kind color */
+  --schemes-outline-variant: rgb(68,70,79); /* @kind color */
+}
+
+:root[data-mode="indigo-lt"] {
+  --schemes-on-surface: rgb(28,27,33); /* @kind color */
+  --schemes-outline-variant: rgb(200,197,208); /* @kind color */
+}
+
+:root[data-mode="indigo-dt"] {
+  --schemes-on-surface: rgb(229,225,233); /* @kind color */
+  --schemes-outline-variant: rgb(71,70,79); /* @kind color */
+}
+
+:root[data-mode="purple-lt"] {
+  --schemes-on-surface: rgb(29,26,32); /* @kind color */
+  --schemes-outline-variant: rgb(203,196,207); /* @kind color */
+}
+
+:root[data-mode="purple-dt"] {
+  --schemes-on-surface: rgb(231,224,232); /* @kind color */
+  --schemes-outline-variant: rgb(74,69,78); /* @kind color */
+}
+
+:root[data-mode="wireframe"] {
+  --static-weight-regular: 400; /* @kind font */
+}
+
+:root[data-mode="mobile"] {
+  --fontfamily: "Roboto"; /* @kind font */
+  --fontsize-0-75rem: 12; /* @kind font */
+  --fontweightregular: 400; /* @kind font */
+  --typography-caption: var(--fontsize-0-75rem);
+}

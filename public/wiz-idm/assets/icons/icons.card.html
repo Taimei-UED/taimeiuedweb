@@ -1,0 +1,127 @@
+<!-- @dsCard group="3 Icons" viewport="728x430" name="Iconography" -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css" rel="stylesheet">
+<style>
+  body{margin:0;padding:24px;background:var(--surface-card);font-family:var(--font-ui);color:var(--grey-90);}
+  h4{margin:0 0 4px;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--grey-70);}
+  .sub{font-size:12px;color:var(--grey-70);margin:0 0 12px;}
+  .sys{display:grid;grid-template-columns:repeat(12,1fr);gap:18px;margin-bottom:28px;}
+  .sys .ic{display:flex;justify-content:center;font-size:22px;color:var(--grey-90);}
+  .bar{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap;}
+  .search{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px;border:1px solid var(--grey-50);border-radius:var(--radius-md);background:var(--white);min-width:240px;flex:1;}
+  .search i{color:var(--grey-70);font-size:16px;}
+  .search input{flex:1;border:none;outline:none;background:transparent;font-family:var(--font-ui);font-size:14px;color:var(--grey-90);}
+  .seg{display:inline-flex;gap:2px;padding:3px;background:var(--grey-20);border-radius:var(--radius-md);}
+  .seg button{border:none;background:transparent;cursor:pointer;font-family:var(--font-ui);font-weight:600;font-size:13px;color:var(--grey-80);padding:5px 12px;border-radius:var(--radius-sm);}
+  .seg button.on{background:var(--white);color:var(--brand-blue-70);box-shadow:var(--shadow-card);}
+  .count{font-size:12px;color:var(--grey-70);font-weight:600;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:10px;}
+  .cell{display:flex;flex-direction:column;align-items:center;gap:7px;padding:12px 6px;border:1px solid var(--grey-30);border-radius:var(--radius-sm);background:var(--white);cursor:pointer;transition:border-color .12s,background .12s;overflow:hidden;}
+  .cell:hover{border-color:var(--brand-blue-40);background:var(--brand-blue-10);}
+  .cell i{font-size:26px;color:var(--grey-90);}
+  .cell span{font-size:9px;color:var(--grey-70);text-align:center;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.2;}
+  .loading{padding:40px;text-align:center;color:var(--grey-70);font-size:14px;}
+  .ai{display:flex;align-items:center;gap:14px;padding:14px 16px;margin-bottom:22px;border:1px solid var(--grey-30);border-radius:var(--radius-md);background:var(--white);}
+  .ai .lot{width:56px;height:56px;flex:none;}
+  .ai .meta b{font-size:13px;font-weight:600;color:var(--grey-90);}
+  .ai .meta p{margin:2px 0 0;font-size:12px;color:var(--grey-70);}
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { Icon } = window.WizIDMDesignSystem_42e9e3;
+const CSS_URL = "https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css";
+
+function App(){
+  const lotRef = React.useRef(null);
+  React.useEffect(() => {
+    if (!lotRef.current || !window.lottie) return;
+    const anim = window.lottie.loadAnimation({
+      container: lotRef.current, renderer: 'svg', loop: true, autoplay: true,
+      path: '../animations/ai-loading.json',
+    });
+    return () => anim.destroy();
+  }, []);
+  const [all, setAll] = React.useState(null);   // [{cls, name, style}]
+  const [q, setQ] = React.useState('');
+  const [style, setStyle] = React.useState('all'); // all | line | fill
+
+  React.useEffect(() => {
+    fetch(CSS_URL).then(r => r.text()).then(txt => {
+      const set = new Set();
+      const re = /\.(ri-[a-z0-9-]+):before/g;
+      let m;
+      while ((m = re.exec(txt))) set.add(m[1]);
+      const list = [...set].map(cls => {
+        const base = cls.slice(3);
+        const st = base.endsWith('-fill') ? 'fill' : base.endsWith('-line') ? 'line' : 'other';
+        return { cls, name: base, style: st };
+      }).sort((a,b) => a.name.localeCompare(b.name));
+      setAll(list);
+    }).catch(() => setAll([]));
+  }, []);
+
+  const filtered = React.useMemo(() => {
+    if (!all) return [];
+    const term = q.trim().toLowerCase();
+    return all.filter(i =>
+      (style === 'all' || i.style === style) &&
+      (!term || i.name.includes(term))
+    );
+  }, [all, q, style]);
+
+  return (
+    <div>
+      <h4>Animated · AI loader</h4>
+      <div className="ai">
+        <div className="lot" ref={lotRef}></div>
+        <div className="meta">
+          <b>AI loading</b>
+          <p>Lottie animation · use during AI auto-check &amp; generation states.</p>
+        </div>
+      </div>
+      <h4>Full RemixIcon library · CDN</h4>
+      <p className="sub">RemixIcon v4.9.0 — the family this system is built on. Add via <code>&lt;i class="ri-{`{name}`}"&gt;&lt;/i&gt;</code>.</p>
+      <div className="bar">
+        <label className="search">
+          <i className="ri-search-line"></i>
+          <input placeholder="Search icons (e.g. file, arrow, user)…" value={q} onChange={e => setQ(e.target.value)} />
+        </label>
+        <div className="seg">
+          {['all','line','fill'].map(s => (
+            <button key={s} className={style===s?'on':''} onClick={() => setStyle(s)}>{s[0].toUpperCase()+s.slice(1)}</button>
+          ))}
+        </div>
+        <span className="count">{all ? filtered.length.toLocaleString() : '…'} icons</span>
+      </div>
+
+      {all === null && <div className="loading">Loading RemixIcon library…</div>}
+      {all && all.length === 0 && <div className="loading">Could not load the icon list from CDN.</div>}
+      {all && all.length > 0 && (
+        <div className="grid">
+          {filtered.map(i => (
+            <div key={i.cls} className="cell" title={i.cls} onClick={() => navigator.clipboard && navigator.clipboard.writeText(i.cls)}>
+              <i className={i.cls}></i>
+              <span>{i.name}</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+<script src="../../theme-toggle.js"></script>
+</body>
+</html>

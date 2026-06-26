@@ -1,0 +1,13 @@
+/* ─ Wiz iDM — Fonts ─────────────────────────────────────────────
+   All UI + display type: Inter (open-source, SIL Open Font License),
+   loaded from Google Fonts. Code/IDs use a monospace stack (Inter has
+   no monospaced cut, so native ui-monospace is used for tabular code).
+   ─────────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui,
+             'Helvetica Neue', Arial, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+}
