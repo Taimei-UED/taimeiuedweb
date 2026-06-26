@@ -1,0 +1,47 @@
+<!-- @dsCard group="4 Components" viewport="728x150" name="Avatar" -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>body{margin:0;padding:24px;background:var(--surface-card);}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { Avatar } = window.WizIDMDesignSystem_42e9e3;
+const Lbl = ({children})=> <span style={{fontFamily:'var(--font-ui)',fontSize:11,fontWeight:700,letterSpacing:'.04em',textTransform:'uppercase',color:'var(--grey-70)'}}>{children}</span>;
+function Demo(){
+  return (
+    <div style={{display:'flex',flexDirection:'column',gap:18}}>
+      <div style={{display:'flex',flexDirection:'column',gap:10}}>
+        <Lbl>Initials — sizes</Lbl>
+        <div style={{display:'flex',gap:14,alignItems:'center'}}>
+          <Avatar name="Jane Ju" size={24} />
+          <Avatar name="Wei Chen" size={32} />
+          <Avatar name="Sofia Park" size={40} />
+          <Avatar name="Liang Wu" size={48} />
+        </div>
+      </div>
+      <div style={{display:'flex',flexDirection:'column',gap:10}}>
+        <Lbl>Stacked group</Lbl>
+        <div style={{display:'flex',alignItems:'center'}}>
+          {['Jane Ju','Wei Chen','Sofia Park','Liang Wu'].map((n,i)=>
+            <span key={n} style={{marginLeft:i?-10:0,boxShadow:'0 0 0 2px var(--surface-card)',borderRadius:'50%'}}>
+              <Avatar name={n} size={32} />
+            </span>)}
+          <span style={{marginLeft:-10,display:'inline-flex',alignItems:'center',justifyContent:'center',width:32,height:32,borderRadius:'50%',background:'var(--grey-30)',color:'var(--grey-80)',fontFamily:'var(--font-ui)',fontWeight:600,fontSize:12,boxShadow:'0 0 0 2px var(--surface-card)'}}>+5</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script>
+<script src="../../theme-toggle.js"></script>
+</body>
+</html>

@@ -1,0 +1,644 @@
+/* Wiz iDM — Design System Guideline app */
+const DS = window.WizIDMDesignSystem_42e9e3;
+const { Logo, Icon } = DS;
+
+const LangCtx = React.createContext(window.WIZ_I18N.en);
+
+/* ── clipboard ── */
+function copyText(t) {
+  try {if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(t);} catch (e) {}
+  const ta = document.createElement('textarea');
+  ta.value = t;ta.style.position = 'fixed';ta.style.opacity = '0';
+  document.body.appendChild(ta);ta.select();
+  try {document.execCommand('copy');} catch (e) {}
+  document.body.removeChild(ta);
+  return Promise.resolve();
+}
+
+function CodeBlock({ code }) {
+  const STR = React.useContext(LangCtx);
+  const [done, setDone] = React.useState(false);
+  return (
+    <div className="gl-codewrap">
+      <button className={'gl-copy' + (done ? ' done' : '')} onClick={() => {copyText(code);setDone(true);setTimeout(() => setDone(false), 1400);}}>
+        <Icon name={done ? 'CheckFill' : 'FileAddFill'} size={13} style={{ color: '#fff' }} />
+        {done ? STR.ui.copied : STR.ui.copy}
+      </button>
+      <pre><code>{code}</code></pre>
+    </div>);
+
+}
+
+function SectionHead({ title, sub }) {
+  return (
+    <div>
+      <h2>{title}</h2>
+      {sub && <p className="sub">{sub}</p>}
+      <hr className="gl-rule" />
+    </div>);
+
+}
+
+/* ── color helpers ── */
+function rgbToHex(rgb) {
+  const m = rgb.match(/\d+/g);
+  if (!m) return rgb;
+  return '#' + m.slice(0, 3).map((n) => (+n).toString(16).padStart(2, '0')).join('').toUpperCase();
+}
+function Swatch({ varName, step, light }) {
+  const ref = React.useRef(null);
+  const [hex, setHex] = React.useState('');
+  const [copied, setCopied] = React.useState(false);
+  React.useEffect(() => {if (ref.current) setHex(rgbToHex(getComputedStyle(ref.current).backgroundColor));});
+  return (
+    <div ref={ref} className="gl-sw" title={'Copy ' + (hex || '')}
+    onClick={() => {copyText(hex);setCopied(true);setTimeout(() => setCopied(false), 1000);}}
+    style={{ background: 'var(' + varName + ')', color: light ? 'var(--grey-90)' : '#fff' }}>
+      <b>{step}</b>
+      <span>{copied ? 'Copied!' : hex}</span>
+    </div>);
+
+}
+function Ramp({ name, base, steps, lightAtOrBelow = 40 }) {
+  return (
+    <React.Fragment>
+      <div className="gl-ramp-title">{name}</div>
+      <div className="gl-ramp">
+        {steps.map((s) => <Swatch key={s} varName={'--' + base + '-' + s} step={s} light={s <= lightAtOrBelow} />)}
+      </div>
+    </React.Fragment>);
+
+}
+const RAMP_STEPS = [100, 90, 80, 70, 60, 50, 40, 30, 20, 10];
+
+const SIGNALS = [
+  ['error', '--signal-error'], ['warning', '--signal-warning'], ['success', '--signal-success'],
+  ['orange', '--signal-orange'], ['pink', '--signal-pink'], ['purple', '--signal-purple'],
+  ['green-blue', '--signal-green-blue'], ['light-blue', '--signal-light-blue'],
+];
+
+/* ── iconography ── */
+const ICONS = ['Home5Line', 'SearchLine', 'Settings3Line', 'Sparkling2Line', 'Sparkling2Fill',
+'EditLine', 'DeleteBinLine', 'FileAddFill', 'FileExcel2Fill', 'FileWarningFill', 'CheckFill',
+'ArrowDownSLine', 'ArrowRightSLine', 'ArrowUpDownLine', 'Filter3Line', 'CloseLine', 'UploadLine',
+'RemixIconsLineDocumentFile', 'RemixIconsLineDocumentFolder', 'RemixIconsLineSystemStar', 'SidebarExpand', 'SidebarShrink'];
+function IconCell({ name }) {
+  const [c, setC] = React.useState(false);
+  return (
+    <div className="gl-iconcell" onClick={() => {copyText('<Icon name="' + name + '" size={20} />');setC(true);setTimeout(() => setC(false), 1000);}}>
+      <Icon name={name} size={22} />
+      <span>{c ? 'Copied!' : name}</span>
+    </div>);
+
+}
+
+/* npm package CTA — downloads the package zip from GitHub. */
+function NpmButton() {
+  const URL = 'https://github.com/Taimei-UED/TUI-npm/archive/refs/heads/main.zip';
+  return (
+    <a className="gl-npm" href={URL} target="_blank" rel="noopener" title="下载完整 npm 包 (TUI-npm)">
+      <i className="ri-download-2-line" style={{ fontSize: 15 }}></i>
+      npm <span className="ver">v1.0</span>
+    </a>
+  );
+}
+
+/* AI loader — Lottie animation rendered via lottie-web. */
+function AILoader({ size = 72 }) {
+  const ref = React.useRef(null);
+  React.useEffect(() => {
+    if (!ref.current || !window.lottie) return;
+    const anim = window.lottie.loadAnimation({
+      container: ref.current, renderer: 'svg', loop: true, autoplay: true,
+      path: 'assets/animations/ai-loading.json',
+    });
+    return () => anim.destroy();
+  }, []);
+  const [c, setC] = React.useState(false);
+  return (
+    <div className="gl-iconcell" style={{ width: 110 }}
+      onClick={() => { copyText('<lottie-player src="assets/animations/ai-loading.json" autoplay loop></lottie-player>'); setC(true); setTimeout(() => setC(false), 1000); }}>
+      <div ref={ref} style={{ width: size, height: size }}></div>
+      <span>{c ? 'Copied!' : 'AI loading'}</span>
+    </div>
+  );
+}
+
+/* Full Remix Icon set (CDN webfont) — reads every .ri-* class from the
+   loaded remixicon stylesheet, with a live filter. */
+function RemixFull() {
+  const [names, setNames] = React.useState([]);
+  const [q, setQ] = React.useState('');
+  const [copied, setCopied] = React.useState(null);
+  React.useEffect(() => {
+    const collect = () => {
+      const found = new Set();
+      for (const sheet of document.styleSheets) {
+        let rules;
+        try { rules = sheet.cssRules; } catch (e) { continue; }
+        if (!rules) continue;
+        for (const r of rules) {
+          const sel = r.selectorText;
+          if (!sel) continue;
+          const m = sel.match(/\.ri-[a-z0-9-]+/g);
+          if (m) m.forEach((c) => { const n = c.slice(1); if (/-(line|fill)$/.test(n)) found.add(n); });
+        }
+      }
+      if (found.size) setNames([...found].sort());
+    };
+    collect();
+    const t = setTimeout(collect, 800);
+    return () => clearTimeout(t);
+  }, []);
+  const filtered = q ? names.filter((n) => n.includes(q.toLowerCase().replace(/\s+/g, '-'))) : names;
+  return (
+    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 12 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+        <input className="gl-isearch" placeholder="Filter icons… (e.g. arrow, file, user)" value={q} onChange={(e) => setQ(e.target.value)} />
+        <span style={{ fontFamily: 'var(--font-ui)', fontSize: 12, color: 'var(--grey-70)' }}>{filtered.length} icons</span>
+      </div>
+      <div className="gl-rigrid">
+        {filtered.map((n) => (
+          <div key={n} className="gl-ricell" title={'<i class=\"' + n + '\"></i>'}
+            onClick={() => { copyText('<i class="' + n + '"></i>'); setCopied(n); setTimeout(() => setCopied(null), 1000); }}>
+            <i className={n}></i>
+            <span>{copied === n ? 'Copied!' : n.replace('ri-', '')}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ════════ code snippets ════════ */
+const GETTING_STARTED_CODE = `<!-- 1 · Link the design system: one stylesheet + the bundle -->
+<link rel="stylesheet" href="styles.css">
+<script src="_ds_bundle.js"></script>
+
+<!-- 2 · Read components off the global namespace -->
+<script type="text/babel">
+  const { Button, Table, Badge } = window.WizIDMDesignSystem_42e9e3;
+  // <Button variant="primary">Auto-check</Button>
+</script>`;
+
+const COLOR_CODE = `/* Reference colours as CSS variables — they re-theme automatically */
+.cta        { background: var(--brand-blue-70); color: var(--white); }
+.surface    { background: var(--surface-card); }
+.text-muted { color: var(--grey-70); }
+.error      { color: var(--red-60); }`;
+
+const TYPE_CODE = `<h1 class="wiz-h1">Heading 1</h1>
+<p  class="wiz-body1">Body text</p>
+<span class="wiz-code">PROTOCOL_ID.00001</span>
+
+/* or compose from tokens */
+.title { font: var(--fw-semibold) var(--fs-h3)/1.35 var(--font-ui); }`;
+
+const SPACING_CODE = `.row  { display: flex; gap: var(--space-md); }   /* 12px */
+.card { padding: var(--space-xl); }              /* 24px */
+
+.ring { box-shadow: var(--ring-hairline); }
+.elev { box-shadow: var(--shadow-card); border-radius: var(--radius-md); } /* 12px */`;
+
+const ICON_CODE = `const { Icon } = window.WizIDMDesignSystem_42e9e3;
+
+<Icon name="SearchLine" size={18} />`;
+
+const LOGO_CODE = `<Logo />                         {/* mark + Wiz | iDM */}
+<Logo variant="mark" height={28} />
+<Logo suffix="EDC" height={24} />`;
+
+const BUTTON_CODE = `<Button variant="primary" icon="Sparkling2Fill">Auto-check</Button>
+<Button variant="normal" chevron>Export</Button>
+<Button variant="text">Cancel</Button>
+<Button variant="primary" size="sm">Small</Button>
+<Button variant="primary" disabled>Disabled</Button>
+
+{/* icon-only & dropdown buttons */}
+<IconButton icon="EditLine" variant="ghost" />
+<Dropdown label="Actions" items={[
+  { label: 'Auto-check', icon: 'Sparkling2Line' },
+  { label: 'Export', icon: 'UploadLine', shortcut: '⌘E' },
+  { divider: true },
+  { label: 'Delete', icon: 'DeleteBinLine', danger: true },
+]} />`;
+
+const INPUT_CODE = `<Input label="Protocol name" required placeholder="e.g. iTaimei-EDC_UAT" />
+<Input label="Plan version" error="Required field" />
+<Input size="sm" placeholder="Compact (28px)" />
+<Textarea label="Query note" rows={3} placeholder="Describe the discrepancy…" />
+<Search width={320} placeholder="Search protocol name, ID, etc." />`;
+
+const SELECT_CODE = `<Select label="Phase" options={['Phase I','Phase II','Phase III']} defaultValue="Phase II" />
+<Select label="Sites" multiple options={['Site 01','Site 02','Site 03']} />
+<Select searchable options={opts} />   {/* type in the field to filter */}`;
+
+const CHECKBOX_CODE = `<Checkbox state="unchecked" label="Unchecked" onChange={fn} />
+<Checkbox state="checked" label="Checked" onChange={fn} />
+<Checkbox state="indeterminate" label="Indeterminate" />
+<Checkbox state="checked" disabled label="Disabled" />`;
+
+const RADIO_CODE = `<Radio label="Standard SDTM" onChange={fn} />
+<Radio checked label="Custom DVP" onChange={fn} />
+<Radio disabled label="Disabled" />`;
+
+const SWITCH_CODE = `<Switch checked={on} onChange={setOn} label="Auto-check on import" />
+<Switch defaultChecked size="sm" label="Small" />
+<Switch disabled label="Disabled" />`;
+
+const POPOVER_CODE = `<PopoverMenu
+  trigger={<Button variant="normal" chevron>Open menu</Button>}
+  items={[
+    { label: 'Edit', icon: 'EditLine' },
+    { label: 'Duplicate', icon: 'FileAddFill', shortcut: '⌘D' },
+    { label: 'Selected', icon: 'CheckFill', selected: true },
+    { divider: true },
+    { label: 'Delete', icon: 'DeleteBinLine', danger: true },
+  ]}
+  onSelect={(v) => console.log(v)} />`;
+
+const UPLOAD_CODE = `<Upload hint="Supports .docx, .xlsx ; Max 50 MB" onBrowse={fn} />
+<FileChip name="Verification_Plan_Data.xlsx" onRemove={fn} />`;
+
+const AVATAR_CODE = `<Avatar name="Jane Ju" size={32} />
+<Avatar src="/u/jane.png" name="Jane Ju" size={40} />`;
+
+const BADGE_CODE = `<Badge tone="green">Active</Badge>
+<Badge tone="yellow">Pending</Badge>
+<Badge tone="red" variant="solid">Error</Badge>
+<Badge tone="blue" variant="outline">Draft</Badge>
+<Badge tone="green" variant="dot">Synced</Badge>`;
+
+const TABLE_CODE = `const cols = [
+  { key: 'id', header: 'Protocol ID', sortable: true },
+  { key: 'name', header: 'Study', sortable: true, filterable: true },
+  { key: 'status', header: 'Status', filterable: true,
+    render: (v) => <Badge tone={v.tone}>{v.label}</Badge> },
+  { key: 'q', header: 'Queries', align: 'right' },
+];
+
+<Table selectable paginated pageSize={5} columns={cols} rows={rows} />`;
+
+const LIST_CODE = `<List>
+  <ListItem icon="Home5Line" label="Home" active onClick={fn} />
+  <ListItem icon="RemixIconsLineDocumentFile" label="DVP" count={12} />
+  <ListDivider label="Settings" />
+  <ListItem icon="Sparkling2Line" label="Auto-check" switchOn={on} onSwitch={setOn} />
+</List>
+
+{/* collapsible tree */}
+<TreeList selectable defaultOpen={['study']} nodes={[
+  { id: 'study', label: 'Study', icon: 'RemixIconsLineDocumentFolder', children: [
+    { id: 'v1', label: 'Visit 1', children: [{ id: 'f1', label: 'Vitals' }] },
+  ] },
+]} />`;
+
+const TITLEBAR_CODE = `<TitleBar title="Manual Check"
+  description="Review and resolve queries before lock"
+  divider
+  actions={<>
+    <Button variant="normal" icon="UploadLine">Export</Button>
+    <Button variant="primary" icon="Sparkling2Fill">Auto-check</Button>
+  </>} />`;
+
+const MESSAGE_CODE = `<Message tone="warning">2 high-severity checks are still open.</Message>
+<Message tone="success">All queries resolved.</Message>
+<Message tone="error" onClose={fn}>Validation failed.</Message>`;
+
+const SNACKBAR_CODE = `<Snackbar tone="success" action="Undo" onAction={fn}>Query resolved</Snackbar>
+<Snackbar variant="filled" tone="error" action="View">Validation failed on 3 fields</Snackbar>
+<Snackbar tone="loading">Running auto-check…</Snackbar>
+<Snackbar tone="info" title="Database locked"
+  description="All queries resolved." footerAction="Got it" />`;
+
+const CARD_CODE = `<Card elevation="ring">…</Card>   {/* hairline border */}
+<Card elevation="card">…</Card>   {/* soft shadow   */}
+<Card elevation="flat">…</Card>`;
+
+const MODAL_CODE = `const [open, setOpen] = React.useState(false);
+
+<Button onClick={() => setOpen(true)}>Open dialog</Button>
+<Modal open={open} title="Lock database?" width={420}
+  onClose={() => setOpen(false)}
+  onCancel={() => setOpen(false)}
+  onConfirm={() => setOpen(false)}
+  confirmLabel="Lock now">
+  This will lock all forms. Locked data can no longer be edited.
+</Modal>`;
+
+const TABS_CODE = `const [tab, setTab] = React.useState('Overview');
+
+<Tabs variant="segmented" items={['Overview','Forms','Queries']} value={tab} onChange={setTab} />
+<Tabs variant="underline" items={['Tab A','Tab B']} />`;
+
+const STEPPER_CODE = `<Steps current={1} steps={[
+  { label: 'Import data', description: 'Source uploaded' },
+  { label: 'Run checks', description: 'In progress' },
+  { label: 'Resolve queries', description: '9 open' },
+  { label: 'Sign off', description: 'Locked' },
+]} />
+
+<Steps current={1} loading checkCompleted steps={steps} />   {/* spinner on active */}
+<Steps orientation="vertical" current={2} steps={steps} />   {/* connector line */}`;
+
+const NAV_CODE = `const [v, setV] = React.useState('mc');
+const [collapsed, setCollapsed] = React.useState(false);
+
+<SideBar
+  items={[
+    { icon: 'Home5Line', label: 'Home', value: 'home' },
+    { icon: 'Sparkling2Line', label: 'Manual Check', value: 'mc' },
+    { icon: 'RemixIconsLineDocumentFile', label: 'DVP', value: 'dvp' },
+  ]}
+  value={v} onSelect={setV}
+  collapsed={collapsed} onToggle={() => setCollapsed(!collapsed)}
+  footerItems={[{ icon: 'Settings3Line', label: 'Configuration' }]} />
+
+<TopNav platform="mac" project="iTaimei- EDC_UAT" onProjectClick={fn} />`;
+
+/* ════════ embedded component cards (the authoritative, full examples) ════════ */
+const CARDS = [
+{ id: 'logo', title: 'Logo', sub: 'Brand lockup — gradient mark + Wiz wordmark + product suffix; mark-only variant; on light and hero surfaces.', src: 'components/brand/logo.card.html', h: 240, code: LOGO_CODE },
+{ id: 'button', title: 'Button', sub: 'Primary · secondary · text · icon · dropdown · group buttons, with sizes, icons, loading and disabled states. 8px radius, soft shadow.', src: 'components/core/buttons.card.html', h: 560, code: BUTTON_CODE },
+{ id: 'input', title: 'Input', sub: 'Text input, textarea and search field with label, required mark and error. sm (28px) / md (36px).', src: 'components/forms/input.card.html', h: 290, code: INPUT_CODE },
+{ id: 'select', title: 'Select', sub: 'Single, multi-select and searchable, with disabled state. Shares the Pop-over menu surface.', src: 'components/forms/select.card.html', h: 420, code: SELECT_CODE },
+{ id: 'checkbox', title: 'Checkbox', sub: 'Unchecked / checked / indeterminate + hover & disabled — as interactive components.', src: 'components/forms/checkbox.card.html', h: 300, code: CHECKBOX_CODE },
+{ id: 'radio', title: 'Radio', sub: 'Single-choice control.', src: 'components/forms/radio.card.html', h: 180, code: RADIO_CODE },
+{ id: 'switch', title: 'Switch', sub: 'Binary toggle; sm / md; disabled.', src: 'components/forms/switch.card.html', h: 160, code: SWITCH_CODE },
+{ id: 'popover', title: 'Pop-over Menu', sub: 'Shared floating menu — item icons, shortcuts, danger, disabled, selected, dividers; scrolls past 200px.', src: 'components/core/popover-menu.card.html', h: 420, code: POPOVER_CODE },
+{ id: 'upload', title: 'Upload', sub: 'Drag-and-drop dropzone with brand tint; uploaded-file chips.', src: 'components/feedback/upload.card.html', h: 260, code: UPLOAD_CODE },
+{ id: 'avatar', title: 'Avatar', sub: 'Circular initial avatars across sizes, plus a stacked group.', src: 'components/layout/avatar.card.html', h: 150, code: AVATAR_CODE },
+{ id: 'status', title: 'Status / Badge', sub: 'Status pill — soft, solid, outline and dot variants across six tones.', src: 'components/data/status.card.html', h: 240, code: BADGE_CODE },
+{ id: 'table', title: 'Table', sub: 'Sortable / filterable headers, selection, resizable columns, inline selector & input cells, row actions, pagination.', src: 'components/data/data.card.html', h: 360, code: TABLE_CODE },
+{ id: 'list', title: 'List', sub: 'Tree (3 levels), icons, checkbox, stat count, dividers and trailing switches.', src: 'components/data/list.card.html', h: 520, code: LIST_CODE },
+{ id: 'titlebar', title: 'Title Bar', sub: 'Section header — title (+ description) and actions; optional bottom divider.', src: 'components/layout/titlebar.card.html', h: 230, code: TITLEBAR_CODE },
+{ id: 'message', title: 'Message', sub: 'Inline alert banner — warning / error / success / info.', src: 'components/feedback/feedback.card.html', h: 200, code: MESSAGE_CODE },
+{ id: 'snackbar', title: 'Snackbar', sub: 'Floating toast — dark & tone-filled, single-line, title + description, action button, loading spinner.', src: 'components/feedback/snackbar.card.html', h: 340, code: SNACKBAR_CODE },
+{ id: 'card', title: 'Card', sub: 'Surface container — ring / card / flat, plus a composed card.', src: 'components/layout/card.card.html', h: 260, code: CARD_CODE },
+{ id: 'modal', title: 'Modal', sub: 'Centered dialog with overlay, title, body and footer actions.', src: 'components/feedback/modal.card.html', h: 320, code: MODAL_CODE },
+{ id: 'tabs', title: 'Tabs', sub: 'Segmented (sliding pill), underline (sliding bar) and pill variants; width adapts to content.', src: 'components/navigation/tabs.card.html', h: 280, code: TABS_CODE },
+{ id: 'stepper', title: 'Stepper', sub: 'Step item states + horizontal, in-progress and vertical steppers.', src: 'components/data/stepper.card.html', h: 440, code: STEPPER_CODE },
+{ id: 'navigation', title: 'Side Bar & Top Nav', sub: 'Collapsible nav rail with active highlight, footer items and user avatar.', src: 'components/navigation/navigation.card.html', h: 560, code: NAV_CODE }];
+
+
+function CardSection({ id, src, h, code }) {
+  const STR = React.useContext(LangCtx);
+  const s = STR.sections[id] || {};
+  const onLoad = (e) => {
+    try {e.target.contentDocument.querySelectorAll('[data-theme-toggle]').forEach((n) => n.remove());} catch (_) {}
+  };
+  return (
+    <section className="gl-section" id={id}>
+      <SectionHead title={s.title} sub={s.sub} />
+      <div className="gl-spec">
+        <div className="gl-frame">
+          <iframe src={src} title={s.title} loading="lazy" onLoad={onLoad}
+          style={{ width: '100%', height: h, border: 'none', display: 'block', background: 'var(--surface-card)' }} />
+        </div>
+        <CodeBlock code={code} />
+      </div>
+    </section>);
+
+}
+
+/* ════════ TOC ════════ */
+const GROUPS = [
+{ label: 'Start', items: [['start', 'Getting started']] },
+{ label: 'Foundations', items: [['colors', 'Colors'], ['type', 'Typography'], ['spacing', 'Spacing & Elevation'], ['icons', 'Iconography']] },
+{ label: 'Brand', items: [['logo', 'Logo']] },
+{ label: 'Components', items: [['button', 'Button'], ['input', 'Input'], ['select', 'Select'], ['checkbox', 'Checkbox'], ['radio', 'Radio'], ['switch', 'Switch'], ['popover', 'Pop-over Menu'], ['upload', 'Upload'], ['avatar', 'Avatar']] },
+{ label: 'Content', items: [['status', 'Status / Badge'], ['table', 'Table'], ['list', 'List'], ['titlebar', 'Title Bar']] },
+{ label: 'Feedback', items: [['message', 'Message'], ['snackbar', 'Snackbar']] },
+{ label: 'Layout', items: [['card', 'Card'], ['modal', 'Modal']] },
+{ label: 'Navigation', items: [['tabs', 'Tabs'], ['stepper', 'Stepper'], ['navigation', 'Side Bar & Top Nav']] }];
+
+
+/* ════════ App ════════ */
+function App() {
+  const [theme, setTheme] = React.useState(() => localStorage.getItem('wiz-theme') || 'light');
+  const [lang, setLang] = React.useState(() => localStorage.getItem('wiz-lang') || 'en');
+  const [active, setActive] = React.useState('start');
+  const STR = window.WIZ_I18N[lang] || window.WIZ_I18N.en;
+  React.useEffect(() => { try { localStorage.setItem('wiz-lang', lang); } catch (e) {} document.documentElement.setAttribute('lang', lang === 'zh' ? 'zh-CN' : 'en'); }, [lang]);
+  React.useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    document.body.setAttribute('data-theme', theme);
+    try {localStorage.setItem('wiz-theme', theme);} catch (e) {}
+  }, [theme]);
+  // The bundled theme-toggle.js injects its own floating toggle on load — remove it
+  // so only the header toggle remains.
+  React.useEffect(() => {
+    const strip = () => document.querySelectorAll('body > [data-theme-toggle]').forEach((n) => n.remove());
+    strip();
+    const t = setTimeout(strip, 300);
+    return () => clearTimeout(t);
+  }, []);
+  React.useEffect(() => {
+    const HEADER = 90; // sticky header + breathing room
+    const onScroll = () => {
+      const secs = [...document.querySelectorAll('.gl-section[id]')];
+      let current = secs[0] ? secs[0].id : 'start';
+      for (const s of secs) {
+        if (s.getBoundingClientRect().top <= HEADER) current = s.id;
+        else break;
+      }
+      setActive(current);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    // settle again once lazy iframes have sized
+    const t = setTimeout(onScroll, 600);
+    return () => { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); clearTimeout(t); };
+  }, []);
+  const goTo = (e, id) => {
+    e.preventDefault();
+    const el = document.getElementById(id);
+    if (!el) return;
+    const y = el.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+    setActive(id);
+  };
+
+  return (
+    <LangCtx.Provider value={STR}>
+    <div className="gl-shell">
+      <aside className="gl-toc">
+        <div className="gl-brand"><Logo height={22} suffix="TUI" /></div>
+        {GROUPS.map((g) =>
+        <React.Fragment key={g.label}>
+            <div className="gl-toc-group">{STR.groups[g.label] || g.label}</div>
+            {g.items.map(([id]) =>
+          <a key={id} href={'#' + id} onClick={(e) => goTo(e, id)} className={active === id ? 'active' : ''}>{STR.toc[id]}</a>
+          )}
+          </React.Fragment>
+        )}
+      </aside>
+
+      <main className="gl-main">
+        <header className="gl-header">
+          <div>
+            <h1>{STR.header.title}</h1>
+            <p>{STR.header.sub}</p>
+          </div>
+          <div className="gl-actions">
+            <NpmButton />
+            <div className="gl-lang">
+              <button className={lang === 'en' ? 'on' : ''} onClick={() => setLang('en')}>EN</button>
+              <button className={lang === 'zh' ? 'on' : ''} onClick={() => setLang('zh')}>中文</button>
+            </div>
+            <div className="gl-toggle">
+              <button className={theme === 'light' ? 'on' : ''} onClick={() => setTheme('light')} title="Light">☀</button>
+              <button className={theme === 'dark' ? 'on' : ''} onClick={() => setTheme('dark')} title="Dark">☾</button>
+            </div>
+          </div>
+        </header>
+
+        <div className="gl-content">
+          {/* GETTING STARTED */}
+          <section className="gl-section" id="start">
+            <SectionHead title={STR.sections.start.title} sub={STR.sections.start.sub} />
+            <div className="gl-spec">
+              <div className="gl-demo">
+                <div style={{ fontFamily: 'var(--font-ui)', fontSize: 14, color: 'var(--grey-80)', lineHeight: 1.6 }}>
+                  <div style={{ marginBottom: 10 }}><Logo height={24} /></div>
+                  {STR.startBody}
+                </div>
+              </div>
+              <CodeBlock code={GETTING_STARTED_CODE} />
+            </div>
+          </section>
+
+          {/* COLORS */}
+          <section className="gl-section" id="colors">
+            <SectionHead title={STR.sections.colors.title} sub={STR.sections.colors.sub} />
+            <div className="gl-spec">
+              <div className="gl-demo" style={{ flexDirection: 'column', alignItems: 'stretch' }}>
+                <Ramp name="Brand Blue — primary / action" base="brand-blue" steps={RAMP_STEPS} lightAtOrBelow={40} />
+                <Ramp name="Grey — neutral UI" base="grey" steps={RAMP_STEPS} lightAtOrBelow={60} />
+                <Ramp name="Orange" base="orange" steps={RAMP_STEPS} lightAtOrBelow={30} />
+                <Ramp name="Blue" base="blue" steps={RAMP_STEPS} lightAtOrBelow={30} />
+                <Ramp name="Pink" base="pink" steps={RAMP_STEPS} lightAtOrBelow={30} />
+                <Ramp name="Yellow" base="yellow" steps={RAMP_STEPS} lightAtOrBelow={50} />
+                <Ramp name="Red" base="red" steps={RAMP_STEPS} lightAtOrBelow={30} />
+                <Ramp name="GreenBlue" base="greenblue" steps={RAMP_STEPS} lightAtOrBelow={30} />
+                <Ramp name="Green" base="green" steps={RAMP_STEPS} lightAtOrBelow={30} />
+                <Ramp name="Purple" base="purple" steps={RAMP_STEPS} lightAtOrBelow={30} />
+                <div className="gl-ramp-title">Signal — semantic state colours</div>
+                <div className="gl-ramp">
+                  {SIGNALS.map(([label, v]) => <Swatch key={v} varName={v} step={label} light={false} />)}
+                </div>
+              </div>
+              <CodeBlock code={COLOR_CODE} />
+            </div>
+          </section>
+
+          {/* TYPOGRAPHY */}
+          <section className="gl-section" id="type">
+            <SectionHead title={STR.sections.type.title} sub={STR.sections.type.sub} />
+            <div className="gl-spec">
+              <div className="gl-demo">
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 14, width: '100%' }}>
+                  {[
+                    ['wiz-display', 'Display', '64 · Inter Bold'],
+                    ['wiz-h1', 'Heading 1', '32 · Inter Bold'],
+                    ['wiz-h2', 'Heading 2', '28 · Semibold'],
+                    ['wiz-h3', 'Heading 3 · main title', '24 · Semibold'],
+                    ['wiz-h4', 'Heading 4 · popup title', '18 · Semibold'],
+                    ['wiz-h5', 'Heading 5 · module title', '16 · Semibold'],
+                    ['wiz-subtitle1', 'Subtitle 1 · card & table header', '14 · Semibold'],
+                    ['wiz-subtitle2', 'Subtitle 2 · tabs, nav', '13 · Semibold'],
+                    ['wiz-body1', 'Body 1 · component & table content', '14 · Regular'],
+                    ['wiz-body2', 'Body 2 · compact body', '13 · Regular'],
+                    ['wiz-caption', 'Caption · chips, tags, tooltips', '12 · Regular'],
+                    ['wiz-label', 'Label · UI labels, badges', '11 · Semibold'],
+                    ['wiz-overline', 'Overline · section labels', '11 · Caps'],
+                    ['wiz-code', 'PROTOCOL_ID.00001 · Code', '12 · Roboto Mono'],
+                  ].map(([cls, label, meta]) =>
+                  <div key={cls} style={{ display: 'flex', alignItems: 'baseline', gap: 16, borderBottom: '1px solid var(--grey-30)', paddingBottom: 8 }}>
+                      <span style={{ width: 110, flex: 'none', fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--grey-70)' }}>.{cls.replace('wiz-', '')}</span>
+                      <span className={cls} style={{ flex: 1, minWidth: 0 }}>{label}</span>
+                      <span style={{ flex: 'none', fontSize: 11, color: 'var(--grey-60)', fontFamily: 'var(--font-mono)' }}>{meta}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <CodeBlock code={TYPE_CODE} />
+            </div>
+          </section>
+
+          {/* SPACING */}
+          <section className="gl-section" id="spacing">
+            <SectionHead title={STR.sections.spacing.title} sub={STR.sections.spacing.sub} />
+            <div className="gl-spec">
+              <div className="gl-demo" style={{ flexDirection: 'column', alignItems: 'stretch', gap: 28 }}>
+                <div>
+                  <div className="gl-ramp-title">Spacing — 4px step</div>
+                  <div style={{ display: 'flex', alignItems: 'flex-end', gap: 18, flexWrap: 'wrap' }}>
+                    {[['xs', 4], ['sm', 8], ['md', 12], ['lg', 16], ['xl', 24], ['2xl', 32], ['3xl', 48], ['4xl', 64]].map(([k, v]) =>
+                    <div key={k} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
+                        <div style={{ width: 24, height: v, background: 'var(--brand-blue-50)', borderRadius: 3 }} />
+                        <span style={{ fontSize: 11, fontWeight: 700, color: 'var(--grey-90)' }}>{k}</span>
+                        <span style={{ fontSize: 10, color: 'var(--grey-70)' }}>{v}px</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div>
+                  <div className="gl-ramp-title">Radius</div>
+                  <div style={{ display: 'flex', alignItems: 'flex-end', gap: 18, flexWrap: 'wrap' }}>
+                    {[['xs', 4], ['sm', 8], ['md', 12], ['lg', 16], ['xl', 24], ['2xl', 32]].map(([k, v]) =>
+                    <div key={k} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
+                        <div style={{ width: 56, height: 40, background: 'var(--brand-blue-10)', boxShadow: 'inset 0 0 0 1.5px var(--brand-blue-50)', borderRadius: v }} />
+                        <span style={{ fontSize: 11, fontWeight: 700, color: 'var(--grey-90)' }}>{k}</span>
+                        <span style={{ fontSize: 10, color: 'var(--grey-70)' }}>{v}px</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div>
+                  <div className="gl-ramp-title">Elevation</div>
+                  <div style={{ display: 'flex', alignItems: 'flex-end', gap: 24, flexWrap: 'wrap' }}>
+                    {[['card', 'var(--shadow-card)'], ['raised', 'var(--shadow-raised)'], ['pop', 'var(--shadow-pop)'], ['modal', 'var(--shadow-modal)'], ['ring', 'var(--ring-hairline)']].map(([k, sh]) =>
+                    <div key={k} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+                        <div style={{ width: 96, height: 56, background: 'var(--surface-card)', borderRadius: 12, boxShadow: sh }} />
+                        <span style={{ fontSize: 11, fontWeight: 700, color: 'var(--grey-90)' }}>{k}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+              <CodeBlock code={SPACING_CODE} />
+            </div>
+          </section>
+
+          {/* ICONS */}
+          <section className="gl-section" id="icons">
+            <SectionHead title={STR.sections.icons.title} sub={STR.sections.icons.sub} />
+            <div className="gl-spec">
+              <div className="gl-demo" style={{ flexDirection: 'column', alignItems: 'stretch', gap: 18 }}>
+                <div className="gl-ramp-title">In your bundle — &lt;Icon name="…" /&gt;</div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 18, width: '100%', alignItems: 'flex-start' }}>
+                  {ICONS.map((n) => <IconCell key={n} name={n} />)}
+                </div>
+                <div className="gl-ramp-title">Animated — AI loader</div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 18, width: '100%' }}>
+                  <AILoader />
+                </div>
+                <div className="gl-ramp-title">Full Remix Icon set — &lt;i class="ri-…" /&gt;</div>
+                <RemixFull />
+              </div>
+              <CodeBlock code={ICON_CODE} />
+            </div>
+          </section>
+
+          {/* embedded component cards */}
+          {CARDS.map((c) => <CardSection key={c.id} {...c} />)}
+        </div>
+      </main>
+    </div>
+    </LangCtx.Provider>);
+
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);

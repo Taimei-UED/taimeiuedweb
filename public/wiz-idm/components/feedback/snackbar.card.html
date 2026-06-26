@@ -1,0 +1,58 @@
+<!-- @dsCard group="6 Feedback" viewport="728x340" name="Snack Bar" -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>body{margin:0;padding:24px;background:var(--surface-page);}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { Snackbar } = window.WizIDMDesignSystem_42e9e3;
+const Head = ({title,desc})=> (
+  <div style={{display:'flex',flexDirection:'column',gap:3,marginBottom:4}}>
+    <span style={{fontFamily:'var(--font-ui)',fontWeight:600,fontSize:14,color:'var(--grey-90)'}}>{title}</span>
+    <span style={{fontFamily:'var(--font-ui)',fontSize:13,color:'var(--grey-70)'}}>{desc}</span>
+  </div>
+);
+function Demo(){
+  return (
+    <div style={{display:'flex',gap:40,alignItems:'flex-start',flexWrap:'wrap'}}>
+      <div style={{display:'flex',flexDirection:'column',gap:12,alignItems:'flex-start'}}>
+        <Head title="Dark" desc="Default — near-black surface, white text. Use over light content." />
+        <Snackbar tone="success" action="Undo">Query resolved</Snackbar>
+        <Snackbar tone="info">Draft saved automatically</Snackbar>
+        <Snackbar tone="warning" action="Retry">Sync delayed — 2 forms pending</Snackbar>
+        <Snackbar tone="error" action="View">Validation failed on 3 fields</Snackbar>
+        <Snackbar tone="loading">Running auto-check…</Snackbar>
+      </div>
+      <div style={{display:'flex',flexDirection:'column',gap:12,alignItems:'flex-start'}}>
+        <Head title="Filled" desc="Tone-colored background with white text & icons. Use for emphasis." />
+        <Snackbar variant="filled" tone="success" action="Undo">Query resolved</Snackbar>
+        <Snackbar variant="filled" tone="info">Draft saved automatically</Snackbar>
+        <Snackbar variant="filled" tone="warning" action="Retry">Sync delayed — 2 forms pending</Snackbar>
+        <Snackbar variant="filled" tone="error" action="View">Validation failed on 3 fields</Snackbar>
+        <Snackbar variant="filled" tone="loading">Running auto-check…</Snackbar>
+      </div>
+      <div style={{display:'flex',flexDirection:'column',gap:16,maxWidth:300}}>
+        <Head title="Title + 3-line body" desc="Title with a longer multi-line description." />
+        <Snackbar tone="info" title="Import in progress"
+          description="We're validating the uploaded DVP workbook against the Custom rule set. This may take a minute for large studies — you can keep working." />
+        <Head title="Title + body + button" desc="Action button below the content." />
+        <Snackbar variant="filled" tone="success" title="Database locked"
+          description="All queries are resolved and the study is signed off."
+          footerAction="Got it" closable={false} />
+      </div>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script>
+<script src="../../theme-toggle.js"></script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!-- @dsCard group="5 Content" viewport="728x520" name="List" -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>body{margin:0;padding:24px;background:var(--surface-page);}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { List, ListItem, ListDivider, TreeList } = window.WizIDMDesignSystem_42e9e3;
+const Lbl = ({children})=> <span style={{fontFamily:'var(--font-ui)',fontSize:11,fontWeight:700,letterSpacing:'.04em',textTransform:'uppercase',color:'var(--grey-70)'}}>{children}</span>;
+const Col = ({title,children})=> (
+  <div style={{display:'flex',flexDirection:'column',gap:10}}>
+    <Lbl>{title}</Lbl>
+    <div style={{background:'var(--surface-card)',border:'1px solid var(--grey-30)',borderRadius:0,padding:8}}>{children}</div>
+  </div>
+);
+
+function CheckList(){
+  const [done,setDone] = React.useState({a:true,b:false,c:false});
+  const t = k=> setDone(d=>({...d,[k]:!d[k]}));
+  return (
+    <List bordered>
+      <ListItem checkbox={done.a?'checked':'unchecked'} onCheck={()=>t('a')} label="Lock visit 1 data" />
+      <ListItem checkbox={done.b?'checked':'unchecked'} onCheck={()=>t('b')} label="Resolve open queries" />
+      <ListItem checkbox={done.c?'checked':'unchecked'} onCheck={()=>t('c')} label="Sign DVP" />
+    </List>
+  );
+}
+function SettingsList(){
+  const [s,setS] = React.useState({auto:true,email:false});
+  return (
+    <List bordered>
+      <ListItem icon="Sparkling2Line" label="Auto-check on import" switchOn={s.auto} onSwitch={v=>setS(p=>({...p,auto:v}))} />
+      <ListDivider />
+      <ListItem icon="Settings3Line" label="Email notifications" switchOn={s.email} onSwitch={v=>setS(p=>({...p,email:v}))} />
+    </List>
+  );
+}
+
+function NavList(){
+  const [sel,setSel] = React.useState('home');
+  const items = [['home','Home','Home5Line'],['dvp','DVP','RemixIconsLineDocumentFile'],['q','Queries','Filter3Line']];
+  return (
+    <List>
+      {items.map(([v,label,icon])=>
+        <ListItem key={v} icon={icon} label={label} active={sel===v} onClick={()=>setSel(v)} />)}
+    </List>
+  );
+}
+
+function StatList(){
+  const [sel,setSel] = React.useState('open');
+  const rows = [['open','Open queries','Filter3Line',43],['resolved','Resolved','CheckFill',128],['overdue','Overdue','FileWarningFill',6]];
+  return (
+    <List>
+      {rows.map(([v,label,icon,count])=>
+        <ListItem key={v} icon={icon} label={label} count={count} active={sel===v} onClick={()=>setSel(v)} />)}
+    </List>
+  );
+}
+function DividerList(){
+  const [sel,setSel] = React.useState('con');
+  return (
+    <List>
+      <ListDivider label="Forms" />
+      <ListItem icon="RemixIconsLineDocumentFile" label="AE log" active={sel==='ae'} onClick={()=>setSel('ae')} />
+      <ListItem icon="RemixIconsLineDocumentFile" label="Con-meds" active={sel==='con'} onClick={()=>setSel('con')} />
+      <ListDivider label="Data" />
+      <ListItem icon="RemixIconsLineDocumentFile" label="Lab normals" active={sel==='lab'} onClick={()=>setSel('lab')} />
+    </List>
+  );
+}
+
+function Demo(){
+  return (
+    <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:24,alignItems:'start'}}>
+      <Col title="1 · Tree (3 levels)">
+        <TreeList selectable defaultSelectedId="f1" defaultOpen={['study','v1']} nodes={[
+          {id:'study',label:'iTaimei-EDC_UAT',icon:'RemixIconsLineDocumentFolder',children:[
+            {id:'v1',label:'Visit 1 — Screening',children:[
+              {id:'f1',label:'Vitals eCRF'},
+              {id:'f2',label:'Demographics'},
+            ]},
+            {id:'v2',label:'Visit 2 — Baseline',children:[
+              {id:'f3',label:'Lab panel'},
+            ]},
+          ]},
+        ]} />
+      </Col>
+
+      <Col title="2 · With icons">
+        <NavList/>
+      </Col>
+
+      <Col title="3 · With checkbox">
+        <CheckList/>
+      </Col>
+
+      <Col title="4 · With stat count">
+        <StatList/>
+      </Col>
+
+      <Col title="5 · With dividers">
+        <DividerList/>
+      </Col>
+
+      <Col title="6 · With switch">
+        <SettingsList/>
+      </Col>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script>
+<script src="../../theme-toggle.js"></script>
+</body>
+</html>

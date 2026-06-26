@@ -1,0 +1,115 @@
+<!-- @dsCard group="4 Components" viewport="728x560" name="Button" -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body{margin:0;padding:24px;background:var(--surface-card);font-family:var(--font-ui);}
+  .cat{display:grid;grid-template-columns:150px 1fr;gap:16px;align-items:center;padding:12px 0;border-bottom:1px solid var(--grey-30);}
+  .cat:last-child{border-bottom:none;}
+  .lbl{display:flex;flex-direction:column;gap:2px;}
+  .lbl b{font-size:13px;font-weight:700;color:var(--grey-90);}
+  .lbl span{font-size:11px;color:var(--grey-70);}
+  .row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { Button, IconButton, Link, Dropdown } = window.WizIDMDesignSystem_42e9e3;
+
+function GroupButton({variant='normal', items=['Day','Week','Month']}){
+  const isPrimary = variant === 'primary';
+  const divider = isPrimary ? 'rgba(255,255,255,0.28)' : 'var(--grey-40)';
+  return (
+    <div style={{
+      display:'inline-flex',
+      border:`1px solid ${isPrimary?'transparent':'var(--grey-40)'}`,
+      borderRadius:'var(--radius-sm)', overflow:'hidden',
+    }}>
+      {items.map((it,i)=>{
+        const obj = typeof it === 'string' ? {label:it} : it;
+        return (
+          <Button key={obj.label ?? i} variant={variant} icon={obj.icon} style={{
+            boxShadow:'none', border:'none', borderRadius:0,
+            borderLeft:i?`1px solid ${divider}`:'none',
+          }} onClick={()=>{}}>{obj.label}</Button>
+        );
+      })}
+    </div>
+  );
+}
+
+function Cat({title,desc,children}){
+  return (
+    <div className="cat">
+      <div className="lbl"><b>{title}</b><span>{desc}</span></div>
+      <div className="row">{children}</div>
+    </div>
+  );
+}
+
+function Demo(){
+  return (
+    <div>
+      <Cat title="1 · Primary Button" desc="Main action — one per view">
+        <Button variant="primary" icon="Sparkling2Fill">With icon</Button>
+        <Button variant="primary">No icon</Button>
+        <Button variant="primary" size="lg" icon="Sparkling2Fill">Large</Button>
+        <Button variant="primary" size="sm" icon="Sparkling2Fill">Small</Button>
+        <Button variant="primary" loading>Loading</Button>
+        <Button variant="primary" disabled>Disabled</Button>
+      </Cat>
+      <Cat title="2 · Secondary Button" desc="Supporting action — white, grey border">
+        <Button variant="normal" icon="UploadLine">With icon</Button>
+        <Button variant="normal">No icon</Button>
+        <Button variant="normal" size="lg" icon="UploadLine">Large</Button>
+        <Button variant="normal" size="sm" icon="UploadLine">Small</Button>
+        <Button variant="normal" loading>Loading</Button>
+        <Button variant="normal" disabled>Disabled</Button>
+      </Cat>
+      <Cat title="3 · Link Button" desc="Lowest weight — inline & text">
+        <Link href="#">View details</Link>
+      </Cat>
+      <Cat title="4 · Icon Button" desc="Square, icon-only — default has no fill, 8% black on hover">
+        <IconButton icon="EditLine" variant="primary" />
+        <IconButton icon="Settings3Line" variant="ghost" />
+        <IconButton icon="EditLine" variant="primary" size="xl" />
+        <IconButton icon="Settings3Line" variant="ghost" size="xl" />
+      </Cat>
+      <Cat title="5 · Drop-down Button" desc="Trailing chevron opens a menu">
+        <Dropdown label="Actions" variant="primary" icon="Sparkling2Fill" items={[
+          {label:'Auto-check', icon:'Sparkling2Line'},
+          {label:'Run query', icon:'Filter3Line'},
+          {divider:true},
+          {label:'Settings', icon:'Settings3Line'},
+        ]} />
+        <Dropdown label="Export" variant="normal" items={[
+          {label:'Export as Excel', icon:'FileExcel2Fill'},
+          {label:'Add file', icon:'FileAddFill'},
+          {divider:true},
+          {label:'Delete', icon:'DeleteBinLine', danger:true},
+        ]} />
+      </Cat>
+      <Cat title="6 · Group Button" desc="Buttons joined together — each is a normal button">
+        <GroupButton variant="normal" />
+        <GroupButton variant="primary" items={['Bold','Italic','Underline']} />
+        <GroupButton variant="normal" items={[
+          {label:'Edit', icon:'EditLine'},
+          {label:'Upload', icon:'UploadLine'},
+          {label:'Delete', icon:'DeleteBinLine'},
+        ]} />
+      </Cat>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script>
+<script src="../../theme-toggle.js"></script>
+</body>
+</html>

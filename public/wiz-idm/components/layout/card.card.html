@@ -1,0 +1,61 @@
+<!-- @dsCard group="7 Layout" viewport="728x260" name="Card" -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>body{margin:0;padding:24px;background:var(--surface-page);}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { Card, Badge, Button, Divider, Avatar } = window.WizIDMDesignSystem_42e9e3;
+const Lbl = ({children})=> <span style={{fontFamily:'var(--font-ui)',fontSize:11,fontWeight:700,letterSpacing:'.04em',textTransform:'uppercase',color:'var(--grey-70)'}}>{children}</span>;
+function Demo(){
+  return (
+    <div style={{display:'flex',flexDirection:'column',gap:14}}>
+      <div style={{display:'flex',gap:12,alignItems:'center'}}>
+        <Lbl>ring</Lbl><Lbl>card</Lbl><Lbl>flat</Lbl>
+      </div>
+      <div style={{display:'flex',gap:16,alignItems:'stretch'}}>
+        <Card elevation="ring" style={{flex:1}}>
+          <span className="wiz-subtitle1">Hairline ring</span>
+          <p className="wiz-body2" style={{margin:'6px 0 0'}}>1px inset border, no shadow.</p>
+        </Card>
+        <Card elevation="card" style={{flex:1}}>
+          <span className="wiz-subtitle1">Soft shadow</span>
+          <p className="wiz-body2" style={{margin:'6px 0 0'}}>Elevated surface with shadow-card.</p>
+        </Card>
+        <Card elevation="flat" style={{flex:1,background:'var(--grey-20)'}}>
+          <span className="wiz-subtitle1">Flat</span>
+          <p className="wiz-body2" style={{margin:'6px 0 0'}}>No border or shadow.</p>
+        </Card>
+      </div>
+
+      <Card elevation="card" padding={0} style={{overflow:'hidden'}}>
+        <div style={{padding:16,display:'flex',alignItems:'center',gap:12}}>
+          <Avatar name="Jane Ju" size={36} />
+          <div style={{flex:1,minWidth:0}}>
+            <div className="wiz-subtitle1">iTaimei-EDC_UAT</div>
+            <div className="wiz-body2" style={{color:'var(--grey-70)'}}>Phase II · 12 open queries</div>
+          </div>
+          <Badge tone="green">Active</Badge>
+        </div>
+        <Divider />
+        <div style={{padding:'12px 16px',display:'flex',justifyContent:'flex-end',gap:8}}>
+          <Button variant="normal" size="sm">Details</Button>
+          <Button variant="primary" size="sm" icon="Sparkling2Fill">Auto-check</Button>
+        </div>
+      </Card>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script>
+<script src="../../theme-toggle.js"></script>
+</body>
+</html>

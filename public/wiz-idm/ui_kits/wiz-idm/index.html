@@ -1,0 +1,62 @@
+<!-- @dsCard group="9 Wiz iDM" viewport="1280x720" name="Wiz iDM App" -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Wiz iDM</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  html,body{margin:0;height:100%;}
+  body{background:var(--grey-20);}
+  #root{height:100vh;}
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<script type="text/babel" src="screens.jsx"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const DS = window.WizIDMDesignSystem_42e9e3;
+const { TopNav, SideBar, Tabs } = DS;
+
+const NAV = [
+  { icon: 'Home5Line', label: 'Home', value: 'home' },
+  { icon: 'EditLine', label: 'Manual Check', value: 'mc' },
+  { icon: 'RemixIconsLineDocumentFile', label: 'DVP', value: 'dvp' },
+  { icon: 'RemixIconsLineDocumentFolder', label: 'eCRF', value: 'ecrf' },
+  { icon: 'RemixIconsLineSystemStar', label: 'Favourites', value: 'fav' },
+];
+
+function App() {
+  const [screen, setScreen] = React.useState('home');
+  const [collapsed, setCollapsed] = React.useState(false);
+  const [theme, setTheme] = React.useState(() => localStorage.getItem('wiz-theme') || 'light');
+  React.useEffect(() => { localStorage.setItem('wiz-theme', theme); }, [theme]);
+  const Screen = screen === 'mc' ? window.ManualCheckScreen
+    : screen === 'dvp' ? window.VerificationScreen
+    : window.HomeScreen;
+  const themeToggle = (
+    <Tabs variant="segmented" items={[{ value: 'light', label: 'Light' }, { value: 'dark', label: 'Dark' }]}
+      value={theme} onChange={setTheme} style={{ marginRight: 4 }} />
+  );
+  return (
+    <div data-theme={theme} style={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden', background: 'var(--bg-color)' }}>
+      <TopNav platform="mac" project="iTaimei- EDC_UAT" right={themeToggle} />
+      <div style={{ display: 'flex', flex: 1, minHeight: 0 }}>
+        <SideBar items={NAV} value={screen} onSelect={setScreen}
+          collapsed={collapsed} onToggle={() => setCollapsed(c => !c)}
+          footerItems={[{ icon: 'Settings3Line', label: 'Configuration' }]} />
+        <main style={{ flex: 1, overflow: 'auto', background: 'var(--bg-color)' }}>
+          <Screen />
+        </main>
+      </div>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
