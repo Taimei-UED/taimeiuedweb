@@ -1,0 +1,132 @@
+/* ─ Wiz iDM — Color tokens ──────────────────────────────────────
+   Source of truth: Wiz Guideline.fig (Taimei) · /Tokens/Color frame.
+   Every value below is the exact fill read from the file's colour
+   specimen. Primitive ramps (Brand Blue, Grey, 8 accent ramps) +
+   signal colours + semantic aliases.
+   ─────────────────────────────────────────────────────────────── */
+:root {
+  /* ── Brand Blue (primary / action) ── 100 darkest → 10 lightest */
+  --brand-blue-100: #001E56;
+  --brand-blue-90:  #052477;
+  --brand-blue-80:  #003AA3;
+  --brand-blue-70:  #0049CD;   /* core brand blue */
+  --brand-blue-60:  #2C6EE7;
+  --brand-blue-50:  #4383F7;
+  --brand-blue-40:  #89B0FB;
+  --brand-blue-30:  #B6CFFF;
+  --brand-blue-20:  #DCE9FF;
+  --brand-blue-10:  #F5F8FE;
+
+  /* ── Grey (neutral UI ramp) ── 100 black → 10 near-white */
+  --grey-100: #000000;
+  --grey-90:  #333333;
+  --grey-80:  #676767;
+  --grey-70:  #9A9A9A;
+  --grey-60:  #BFBFBF;
+  --grey-50:  #CCCCCC;
+  --grey-40:  #E5E5E5;
+  --grey-30:  #F0F0F0;
+  --grey-20:  #F5F5F5;
+  --grey-10:  #FAFAFA;
+  --white:    #FFFFFF;
+  --black:    #000000;
+
+  /* ── Main / BG ── */
+  --main-white: #FFFFFF;
+  --bg-color:   #F5F5F5;
+
+  /* ── Orange ramp ── */
+  --orange-100: #271306; --orange-90: #461D00; --orange-80: #6D2D00; --orange-70: #9A4000;
+  --orange-60:  #D65900; --orange-50: #FF6A00; --orange-40: #FF832C; --orange-30: #FFB682;
+  --orange-20:  #FFD7BA; --orange-10: #FFF0E5;
+
+  /* ── Blue ramp ── */
+  --blue-100: #061727; --blue-90: #012749; --blue-80: #003A6D; --blue-70: #00539A;
+  --blue-60:  #0072C3; --blue-50: #1192E8; --blue-40: #33B1FF; --blue-30: #82CFFF;
+  --blue-20:  #BAE6FF; --blue-10: #E5F6FF;
+
+  /* ── Pink ramp ── */
+  --pink-100: #2B001E; --pink-90: #70004F; --pink-80: #9E006F; --pink-70: #BC0084;
+  --pink-60:  #EA11A9; --pink-50: #FF57CD; --pink-40: #FF85D8; --pink-30: #FFADE7;
+  --pink-20:  #FFD0F1; --pink-10: #FFEAF9;
+
+  /* ── Yellow ramp ── */
+  --yellow-100: #2D2100; --yellow-90: #523C00; --yellow-80: #856200; --yellow-70: #B88702;
+  --yellow-60:  #D69D00; --yellow-50: #FFBB00; --yellow-40: #FFC629; --yellow-30: #FFD35C;
+  --yellow-20:  #FFEBB3; --yellow-10: #FEF6DF;
+
+  /* ── Red ramp ── */
+  --red-100: #490004; --red-90: #7A0007; --red-80: #A00009; --red-70: #BD000A;
+  --red-60:  #DA1E28; --red-50: #FA4D56; --red-40: #FF8389; --red-30: #FFB3B8;
+  --red-20:  #FFD7D9; --red-10: #FFF1F1;
+
+  /* ── GreenBlue ramp ── */
+  --greenblue-100: #071D1F; --greenblue-90: #023136; --greenblue-80: #004B52; --greenblue-70: #006B75;
+  --greenblue-60:  #0894A1; --greenblue-50: #00B6C7; --greenblue-40: #00CEE0; --greenblue-30: #51E2F0;
+  --greenblue-20:  #98F6FF; --greenblue-10: #D1FBFF;
+
+  /* ── Green ramp ── */
+  --green-100: #061C06; --green-90: #092E09; --green-80: #0E470E; --green-70: #156115;
+  --green-60:  #1A801A; --green-50: #23A123; --green-40: #3EC23E; --green-30: #6EDB6E;
+  --green-20:  #B5F6B5; --green-10: #DBFFDB;
+
+  /* ── Purple ramp ── */
+  --purple-100: #1C0F30; --purple-90: #31135E; --purple-80: #491D8B; --purple-70: #6929C4;
+  --purple-60:  #8A3FFC; --purple-50: #A56EFF; --purple-40: #BE95FF; --purple-30: #D4BBFF;
+  --purple-20:  #E8DAFF; --purple-10: #F6F2FF;
+
+  /* ── Signal (state) colours ── */
+  --signal-error:      #DA1E28;
+  --signal-warning:    #FFBB00;
+  --signal-success:    #1A801A;
+  --signal-orange:     #FF6A00;
+  --signal-pink:       #FF57CD;
+  --signal-purple:     #8A3FFC;
+  --signal-green-blue: #00B6C7;
+  --signal-light-blue: #1192E8;
+
+  /* ── Accent semantic (base hue + soft tint) — map to ramps ── */
+  --accent-blue:        var(--blue-50);   --accent-blue-soft:      var(--blue-10);
+  --accent-pink:        var(--pink-50);   --accent-pink-soft:      var(--pink-10);
+  --accent-yellow:      var(--yellow-50); --accent-yellow-soft:    var(--yellow-10);
+  --accent-red:         var(--red-60);    --accent-red-soft:       var(--red-10);
+  --accent-greenblue:   var(--greenblue-50); --accent-greenblue-soft: var(--greenblue-10);
+  --accent-green:       var(--green-60);  --accent-green-soft:     var(--green-10);
+  --accent-purple:      var(--purple-60); --accent-purple-soft:    var(--purple-10);
+  --accent-orange:      var(--orange-50); --accent-orange-soft:    var(--orange-10);
+
+  /* ── Brand gradient (logo mark, hero, BG) ── */
+  --grad-brand: linear-gradient(90deg, rgb(64,106,251) 0%, rgb(7,142,251) 25.76%, rgb(147,154,255) 71.49%, rgb(214,152,252) 99.81%); /* @kind color */
+  --grad-bg:    linear-gradient(180deg, #F1F6FF 0%, #F7FAFF 100%); /* @kind color */
+  --grad-hero:  linear-gradient(160deg, rgb(20,18,84) 0%, rgb(58,38,170) 48%, rgb(108,28,224) 100%); /* @kind color */
+
+  /* ── Semantic aliases ── */
+  --color-primary:        var(--brand-blue-70);
+  --color-primary-hover:  var(--brand-blue-80);
+  --color-primary-active: var(--brand-blue-90);
+  --color-primary-soft:   var(--brand-blue-10);
+  --color-on-primary:     var(--white);
+  --ink-on-accent:        #FFFFFF;   /* text/icons on a filled colour — white in both modes */
+
+  --text-primary:    var(--grey-90);
+  --text-secondary:  var(--grey-80);
+  --text-tertiary:   var(--grey-70);
+  --text-disabled:   var(--grey-60);
+  --text-link:       var(--brand-blue-70);
+  --text-on-dark:    var(--white);
+
+  --surface-page:    var(--grey-20);
+  --surface-card:    var(--white);
+  --surface-sunken:  var(--grey-30);
+  --surface-hover:   var(--grey-20);
+  --surface-selected:var(--brand-blue-10);
+
+  --border-subtle:   var(--grey-40);
+  --border-default:  var(--grey-50);
+  --border-strong:   var(--grey-60);
+  --border-focus:    var(--brand-blue-70);
+
+  --state-error:   var(--signal-error);
+  --state-warning: var(--signal-warning);
+  --state-success: var(--signal-success);
+}

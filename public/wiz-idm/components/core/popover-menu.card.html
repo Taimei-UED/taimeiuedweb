@@ -1,0 +1,79 @@
+<!-- @dsCard group="4 Components" viewport="728x420" name="Pop-over Menu" -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>body{margin:0;padding:24px;background:var(--surface-card);}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { PopoverMenu, MenuItem, Button, IconButton } = window.WizIDMDesignSystem_42e9e3;
+
+function Demo(){
+  return (
+    <div style={{display:'flex', gap:40, alignItems:'flex-start', flexWrap:'wrap'}}>
+      {/* Static specimen — always-open menu showing every item style */}
+      <div style={{display:'flex', flexDirection:'column', gap:10}}>
+        <span style={{fontFamily:'var(--font-ui)', fontSize:12, fontWeight:700, letterSpacing:'.04em', textTransform:'uppercase', color:'var(--grey-70)'}}>Menu surface</span>
+        <div style={{
+          width:220, background:'var(--surface-card)', border:'1px solid var(--grey-40)',
+          borderRadius:'var(--radius-sm)', boxShadow:'var(--shadow-pop)', padding:4,
+          display:'flex', flexDirection:'column', gap:2,
+        }}>
+          <MenuItem item={{label:'Edit', icon:'EditLine', shortcut:'⌘E'}} />
+          <MenuItem item={{label:'Selected', icon:'CheckFill', selected:true}} />
+          <MenuItem item={{label:'Upload', icon:'UploadLine'}} />
+          <MenuItem item={{label:'Disabled', icon:'Settings3Line', disabled:true}} />
+          <span style={{height:1, background:'var(--grey-30)', margin:'4px 0'}}></span>
+          <MenuItem item={{label:'Delete', icon:'DeleteBinLine', danger:true}} />
+        </div>
+      </div>
+
+      {/* Live triggers */}
+      <div style={{display:'flex', flexDirection:'column', gap:14}}>
+        <span style={{fontFamily:'var(--font-ui)', fontSize:12, fontWeight:700, letterSpacing:'.04em', textTransform:'uppercase', color:'var(--grey-70)'}}>Triggers — click to open</span>
+        <div style={{display:'flex', gap:12, alignItems:'center', flexWrap:'wrap'}}>
+          <PopoverMenu
+            trigger={<Button variant="normal" chevron>Actions</Button>}
+            items={[
+              {label:'Auto-check', icon:'Sparkling2Line'},
+              {label:'Export', icon:'UploadLine', shortcut:'⌘E'},
+              {divider:true},
+              {label:'Delete', icon:'DeleteBinLine', danger:true},
+            ]}
+          />
+          <PopoverMenu
+            align="right"
+            trigger={<IconButton icon="Settings3Line" variant="ghost" />}
+            items={[
+              {label:'Rename', icon:'EditLine'},
+              {label:'Duplicate', icon:'FileAddFill'},
+              {label:'Archive', icon:'Filter3Line'},
+            ]}
+          />
+        </div>
+        <span style={{fontFamily:'var(--font-ui)', fontSize:12, fontWeight:700, letterSpacing:'.04em', textTransform:'uppercase', color:'var(--grey-70)', marginTop:6}}>Scrolls past 200px</span>
+        <div style={{
+          width:220, maxHeight:200, overflowY:'auto',
+          background:'var(--surface-card)', border:'1px solid var(--grey-40)',
+          borderRadius:'var(--radius-sm)', boxShadow:'var(--shadow-pop)', padding:4,
+          display:'flex', flexDirection:'column', gap:2,
+        }}>
+          {['Phase I — Screening','Phase I — Baseline','Phase II — Treatment','Phase II — Follow-up','Phase III — Extension','Phase III — Safety','Open-label extension','Long-term follow-up','Database lock','Archive'].map(l=>
+            <MenuItem key={l} item={{label:l}} />)}
+        </div>
+        </div>
+      </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script>
+<script src="../../theme-toggle.js"></script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+/* ─ Wiz iDM Design System — global CSS entry point ──────────────
+   Consumers link this one file. Imports only. */
+@import './tokens/fonts.css';
+@import './tokens/colors.css';
+@import './tokens/colors-dark.css';
+@import './tokens/typography.css';
+@import './tokens/fig-tokens.css';
+@import './tokens/spacing.css';

@@ -1,0 +1,103 @@
+/* ─ Wiz iDM — Dark mode color tokens ────────────────────────────
+   Activated by a [data-theme="dark"] (or .dark) ancestor. Every token
+   name from colors.css is re-pointed to its dark-mode value, so all
+   components — which reference the tokens, never raw hex — flip
+   automatically. Greys, surfaces and the brand-blue action scale are
+   hand-tuned to preserve elevation and contrast; the accent + signal
+   ramps are auto-inverted (HSL lightness flip) from the light palette.
+   ─────────────────────────────────────────────────────────────── */
+:root[data-theme="dark"], .dark, [data-theme="dark"] {
+  /* ── Grey (semantic-aware inversion) ── */
+  --grey-100: #FFFFFF;
+  --grey-90:  #ECECEC;   /* primary text */
+  --grey-80:  #B8B8B8;   /* secondary text */
+  --grey-70:  #8C8C8C;   /* tertiary text */
+  --grey-60:  #6B6B6B;   /* disabled text */
+  --grey-50:  #4D4D4D;   /* border default */
+  --grey-40:  #3A3A3A;   /* border subtle / dividers */
+  --grey-30:  #2A2A2A;   /* sunken / chip fill */
+  --grey-20:  #161616;   /* page background */
+  --grey-10:  #242424;   /* table stripe */
+  --white:    #1E1E1E;   /* card surface (elevated above page) */
+  --black:    #FFFFFF;
+  --main-white: #1E1E1E;
+  --bg-color:   #161616;
+
+  /* ── Brand Blue (action scale, tuned for dark) ── */
+  --brand-blue-100: #B6CFFF;
+  --brand-blue-90:  #8FB8FF;   /* active */
+  --brand-blue-80:  #6FA1FF;   /* hover */
+  --brand-blue-70:  #4F8CFF;   /* core action */
+  --brand-blue-60:  #3B7BF0;
+  --brand-blue-50:  #2E6AE0;
+  --brand-blue-40:  #24508F;
+  --brand-blue-30:  #1C3A66;   /* focus ring / disabled border */
+  --brand-blue-20:  #16263F;
+  --brand-blue-10:  #0F1B2E;   /* soft selected / hover bg */
+
+  /* ── Orange ramp (auto-inverted) ── */
+  --orange-100: #F9E5D8; --orange-90: #FFD6B9; --orange-80: #FFBF92; --orange-70: #FFA565;
+  --orange-60:  #FF8229; --orange-50: #FF6A00; --orange-40: #D35700; --orange-30: #7D3400;
+  --orange-20:  #451D00; --orange-10: #241204;
+
+  /* ── Blue ramp ── */
+  --blue-100: #D8E9F9; --blue-90: #B6DCFE; --blue-80: #92CCFF; --blue-70: #65B8FF;
+  --blue-60:  #3CAEFF; --blue-50: #1798EE; --blue-40: #007ECC; --blue-30: #004D7D;
+  --blue-20:  #002C45; --blue-10: #0E1F2E;
+
+  /* ── Pink ramp ── */
+  --pink-100: #FFD4F2; --pink-90: #FF8FDE; --pink-80: #FF61D0; --pink-70: #FF43C7;
+  --pink-60:  #EE15AD; --pink-50: #C2008A; --pink-40: #8E0064; --pink-30: #5C0041;
+  --pink-20:  #380028; --pink-10: #2A0820;
+
+  /* ── Yellow ramp ── */
+  --yellow-100: #FFF3D2; --yellow-90: #FFE9AD; --yellow-80: #FFDC7A; --yellow-70: #FDCC47;
+  --yellow-60:  #FFC629; --yellow-50: #FFBB00; --yellow-40: #D69D00; --yellow-30: #A37700;
+  --yellow-20:  #4C3800; --yellow-10: #2A2206;
+
+  /* ── Red ramp ── */
+  --red-100: #FFB6BA; --red-90: #FF858C; --red-80: #FF5F68; --red-70: #FF424C;
+  --red-60:  #E1252F; --red-50: #C20512; --red-40: #8E000A; --red-30: #5C0006;
+  --red-20:  #380003; --red-10: #2A1012;
+
+  /* ── GreenBlue ramp ── */
+  --greenblue-100: #E0F6F8; --greenblue-90: #C9F8FD; --greenblue-80: #ADF8FF; --greenblue-70: #8AF5FF;
+  --greenblue-60:  #5EEAF7; --greenblue-50: #38EEFF; --greenblue-40: #1FEDFF; --greenblue-30: #0FA0AE;
+  --greenblue-20:  #005E67; --greenblue-10: #06262A;
+
+  /* ── Green ramp ── */
+  --green-100: #E3F9E3; --green-90: #D1F6D1; --green-80: #B8F1B8; --green-70: #9EEA9E;
+  --green-60:  #7FE57F; --green-50: #5EDC5E; --green-40: #3DC13D; --green-30: #249124;
+  --green-20:  #0C3A0C; --green-10: #0C2A0C;
+
+  /* ── Purple ramp ── */
+  --purple-100: #DCCFF0; --purple-90: #BFA1EC; --purple-80: #A074E2; --purple-70: #8A5BF0;
+  --purple-60:  #A56EFF; --purple-50: #8A3FFC; --purple-40: #6929C4; --purple-30: #491D8B;
+  --purple-20:  #2E1A5A; --purple-10: #1E1030;
+
+  /* ── Signal (state) — kept vivid on dark ── */
+  --signal-error:      #FF5C64;
+  --signal-warning:    #FFC62E;
+  --signal-success:    #4FD24F;
+  --signal-orange:     #FF8229;
+  --signal-pink:       #FF57CD;
+  --signal-purple:     #A56EFF;
+  --signal-green-blue: #38EEFF;
+  --signal-light-blue: #3CAEFF;
+
+  /* ── Accent semantic (base hue + soft tint) ── */
+  --accent-blue:      var(--blue-50);      --accent-blue-soft:      var(--blue-10);
+  --accent-pink:      var(--pink-50);      --accent-pink-soft:      var(--pink-10);
+  --accent-yellow:    var(--yellow-50);    --accent-yellow-soft:    var(--yellow-10);
+  --accent-red:       var(--red-60);       --accent-red-soft:       var(--red-10);
+  --accent-greenblue: var(--greenblue-50); --accent-greenblue-soft: var(--greenblue-10);
+  --accent-green:     var(--green-60);     --accent-green-soft:     var(--green-10);
+  --accent-purple:    var(--purple-60);    --accent-purple-soft:    var(--purple-10);
+  --accent-orange:    var(--orange-50);    --accent-orange-soft:    var(--orange-10);
+
+  /* ── Gradients ── (brand mark constant; surfaces darkened) ── */
+  --grad-bg:   linear-gradient(180deg, #14171F 0%, #0E1016 100%); /* @kind color */
+  --grad-hero: linear-gradient(160deg, #0B0A28 0%, #1B1250 48%, #2E0E60 100%); /* @kind color */
+
+  /* ── Elevation ring uses --grey-40 → adapts automatically ── */
+}

@@ -1,0 +1,50 @@
+<!-- @dsCard group="5 Content" viewport="728x360" name="Table" -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>body{margin:0;padding:24px;background:var(--surface-card);}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { Badge, Table, IconButton, Select, Input } = window.WizIDMDesignSystem_42e9e3;
+function Demo(){
+  const [rows,setRows] = React.useState([
+    {id:0,name:'iTaimei-EDC_UAT',status:{label:'Active',tone:'green'},phase:'Phase II',note:'On track'},
+    {id:1,name:'DVP-Phase II',status:{label:'Pending',tone:'yellow'},phase:'Phase I',note:''},
+    {id:2,name:'eCRF-Cohort 4',status:{label:'Review',tone:'purple'},phase:'Phase III',note:'Needs sign-off'},
+    {id:3,name:'Lab-Normals_2026',status:{label:'Active',tone:'green'},phase:'Phase II',note:'Imported'},
+    {id:4,name:'AE-Reconciliation',status:{label:'Locked',tone:'grey'},phase:'Phase III',note:'Final'},
+    {id:5,name:'PK-Sampling_B',status:{label:'Pending',tone:'yellow'},phase:'Phase I',note:''},
+  ]);
+  const patch = (id,key,val)=> setRows(rs=> rs.map(r=> r.id===id ? {...r,[key]:val} : r));
+  const cols = [
+    {key:'name',header:'Protocol',sortable:true,filterable:true},
+    {key:'status',header:'Status',sortable:true,filterable:true,render:v=> <Badge tone={v.tone}>{v.label}</Badge>},
+    {key:'phase',header:'Phase',width:140,render:(v,row)=>
+      <Select size="sm" value={v} options={['Phase I','Phase II','Phase III']} onChange={val=>patch(row.id,'phase',val)} />},
+    {key:'note',header:'Note',width:180,render:(v,row)=>
+      <Input size="sm" value={v} placeholder="Add note…" onChange={e=>patch(row.id,'note',e.target.value)} />},
+    {key:'act',header:'Action',width:96,align:'center',render:(v,row)=>
+      <span style={{display:'flex',gap:6,justifyContent:'center'}}>
+        <IconButton icon="EditLine" variant="ghost" size="sm" />
+        <IconButton icon="DeleteBinLine" variant="ghost" size="sm" onClick={()=>setRows(rs=>rs.filter(r=>r.id!==row.id))} />
+      </span>},
+  ];
+  return (
+    <div style={{display:'flex',flexDirection:'column',gap:16}}>
+      <Table selectable paginated pageSize={5} columns={cols} rows={rows} />
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script>
+<script src="../../theme-toggle.js"></script>
+</body>
+</html>

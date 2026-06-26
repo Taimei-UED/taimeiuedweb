@@ -1,0 +1,52 @@
+/* ─ Wiz iDM — Typography ────────────────────────────────────────
+   All type uses Inter (open-source); code/IDs use a native monospace stack.
+   Type roles taken directly from the .fig Typography specimen.
+   ─────────────────────────────────────────────────────────────── */
+:root {
+  /* Font sizes (px) */
+  --fs-display:  64px;  /* hero / brand wordmark */
+  --fs-h1:       32px;
+  --fs-h2:       28px;
+  --fs-h3:       24px;   /* special main title */
+  --fs-h4:       18px;   /* popup title */
+  --fs-h5:       16px;   /* module title */
+  --fs-subtitle1:14px;   /* card / table header */
+  --fs-subtitle2:13px;   /* tabs, nav menu */
+  --fs-body1:    14px;   /* body, component, table content */
+  --fs-body2:    13px;   /* compact body */
+  --fs-code:     12px;
+  --fs-caption:  12px;   /* chips, tags, tooltips */
+  --fs-label:    11px;   /* UI labels, badges */
+  --fs-overline: 11px;   /* ALL CAPS section labels */
+
+  /* Weights */
+  --fw-regular:  400; /* @kind font */
+  --fw-medium:   500; /* @kind font */
+  --fw-semibold: 600; /* @kind font */
+  --fw-bold:     700; /* @kind font */
+
+  /* Line heights */
+  --lh-tight:   1.2; /* @kind font */
+  --lh-snug:    1.35; /* @kind font */
+  --lh-normal:  1.5; /* @kind font */
+}
+
+/* ── Type role utility classes ── */
+.wiz-display { font-family: var(--font-display); font-weight: var(--fw-bold); font-size: var(--fs-display); line-height: var(--lh-tight); color: var(--text-primary); }
+.wiz-h1 { font-family: var(--font-display); font-weight: var(--fw-bold); font-size: var(--fs-h1); line-height: var(--lh-tight); color: var(--text-primary); }
+.wiz-h2 { font-family: var(--font-ui); font-weight: var(--fw-semibold); font-size: var(--fs-h2); line-height: var(--lh-snug); color: var(--text-primary); }
+.wiz-h3 { font-family: var(--font-ui); font-weight: var(--fw-semibold); font-size: var(--fs-h3); line-height: var(--lh-snug); color: var(--text-primary); }
+.wiz-h4 { font-family: var(--font-ui); font-weight: var(--fw-semibold); font-size: var(--fs-h4); line-height: var(--lh-snug); color: var(--text-primary); }
+.wiz-h5 { font-family: var(--font-ui); font-weight: var(--fw-semibold); font-size: var(--fs-h5); line-height: var(--lh-snug); color: var(--text-primary); }
+.wiz-subtitle1 { font-family: var(--font-ui); font-weight: var(--fw-semibold); font-size: var(--fs-subtitle1); line-height: var(--lh-normal); color: var(--text-primary); }
+.wiz-subtitle2 { font-family: var(--font-ui); font-weight: var(--fw-semibold); font-size: var(--fs-subtitle2); line-height: var(--lh-normal); color: var(--text-primary); }
+.wiz-body1 { font-family: var(--font-ui); font-weight: var(--fw-regular); font-size: var(--fs-body1); line-height: var(--lh-normal); color: var(--text-primary); }
+.wiz-body2 { font-family: var(--font-ui); font-weight: var(--fw-regular); font-size: var(--fs-body2); line-height: var(--lh-normal); color: var(--text-secondary); }
+.wiz-code { font-family: var(--font-mono); font-weight: var(--fw-regular); font-size: var(--fs-code); line-height: var(--lh-normal); color: var(--text-primary); }
+.wiz-caption { font-family: var(--font-ui); font-weight: var(--fw-regular); font-size: var(--fs-caption); line-height: var(--lh-normal); color: var(--text-secondary); }
+.wiz-label { font-family: var(--font-ui); font-weight: var(--fw-semibold); font-size: var(--fs-label); line-height: var(--lh-normal); color: var(--text-primary); }
+.wiz-overline { font-family: var(--font-ui); font-weight: var(--fw-semibold); font-size: var(--fs-overline); line-height: var(--lh-normal); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-tertiary); }
+
+/* Placeholder / hint text — Grey 50 across all form fields */
+input::placeholder,
+textarea::placeholder { color: var(--grey-50); opacity: 1; }

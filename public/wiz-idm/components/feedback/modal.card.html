@@ -1,0 +1,44 @@
+<!-- @dsCard group="7 Layout" viewport="728x320" name="Modal" -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>html,body{margin:0;height:100%;}body{padding:24px;background:var(--surface-page);box-sizing:border-box;}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { Modal, Button, Input, Select } = window.WizIDMDesignSystem_42e9e3;
+function Demo(){
+  const [open,setOpen]=React.useState(true);
+  const [confirm,setConfirm]=React.useState(false);
+  return (
+    <div style={{display:'flex',gap:12,flexWrap:'wrap'}}>
+      <Button variant="primary" onClick={()=>setOpen(true)}>Open form dialog</Button>
+      <Button variant="normal" onClick={()=>setConfirm(true)}>Open confirm dialog</Button>
+
+      <Modal open={open} title="New project" width={480}
+        onClose={()=>setOpen(false)} onCancel={()=>setOpen(false)} onConfirm={()=>setOpen(false)} confirmLabel="Create">
+        <div style={{display:'flex',flexDirection:'column',gap:14}}>
+          <Input label="Protocol name" required placeholder="e.g. iTaimei-EDC_UAT" />
+          <Select label="Phase" required options={['Phase I','Phase II','Phase III']} defaultValue="Phase II" />
+        </div>
+      </Modal>
+
+      <Modal open={confirm} title="Lock database?" width={420}
+        onClose={()=>setConfirm(false)} onCancel={()=>setConfirm(false)} onConfirm={()=>setConfirm(false)} confirmLabel="Lock now">
+        This will lock all forms in <b>iTaimei-EDC_UAT</b>. Locked data can no longer be edited without an unlock request.
+      </Modal>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script>
+<script src="../../theme-toggle.js"></script>
+</body>
+</html>
